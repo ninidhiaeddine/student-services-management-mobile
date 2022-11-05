@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Student Services Management App</string>
+    <string name="student_services_management">Student Services Management</string>
+    <string name="student_login">Student Login</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="app_logo">AppLogo</string>
 </resources>
