@@ -6,4 +6,12 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="app_logo">AppLogo</string>
+    <string name="charles_hostler_services">Charles Hostler Services</string>
+    <string name="dorms_services">Dorms Services</string>
+    <string name="laundry">Laundry</string>
+    <string name="room_cleaning">Room Cleaning</string>
+    <string name="gym">Gym</string>
+    <string name="pool">Pool</string>
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="n_a">N/A</string>
 </resources>
