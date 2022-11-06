@@ -18,4 +18,16 @@
     <string name="reservations">Reservations</string>
     <string name="help">Help</string>
     <string name="log_out">Log Out</string>
+    <string name="proceed">Proceed</string>
+
+    <string-array name="residences_array">
+        <item>Kerr I Hall</item>
+        <item>Penrose Hall</item>
+        <item>Kerr II Hall</item>
+        <item>New Women\'s Dorms</item>
+        <item>Murex Hall</item>
+        <item>Boustany Hall</item>
+        <item>Jewett Hall</item>
+        <item>Off-campus (Mayfair)</item>
+    </string-array>
 </resources>

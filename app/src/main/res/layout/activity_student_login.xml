@@ -92,12 +92,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/buttonLogin"
+            android:id="@+id/button_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/login"
-            />
+            android:onClick="loginOnClick"
+            tools:ignore="UsingOnClickInXml" />
 
     </LinearLayout>
 

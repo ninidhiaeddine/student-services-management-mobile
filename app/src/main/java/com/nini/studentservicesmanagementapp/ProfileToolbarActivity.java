@@ -6,23 +6,29 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class StudentServicesActivity extends AppCompatActivity {
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private Toolbar toolbar;
+public class ProfileToolbarActivity extends AppCompatActivity {
+    protected DrawerLayout drawerLayout;
+    protected NavigationView navigationView;
+    protected Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_services);
+        setContentView(R.layout.activity_profile_toolbar);
 
+        // set up common UI:
         findViews();
         setUpToolbar();
         setUpNavigationView();
+
+        // add specific fragment:
+        addFragment();
     }
 
     private void findViews() {
@@ -43,7 +49,7 @@ public class StudentServicesActivity extends AppCompatActivity {
     }
 
     @SuppressLint("NonConstantResourceId")
-    private void setUpNavigationView() {
+    protected void setUpNavigationView() {
         navigationView.setNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()) {
                 case R.id.reservations_item:
@@ -64,5 +70,37 @@ public class StudentServicesActivity extends AppCompatActivity {
             }
             return true;
         });
+    }
+
+    private void addFragment() {
+        // get the intent:
+        Intent intent = getIntent();
+        // extract the extras out of the intent:
+        Bundle extras = intent.getExtras();
+        try {
+            if (extras != null) {
+                Class fragmentClass = determineFragment(extras);
+                getSupportFragmentManager().beginTransaction()
+                        .setReorderingAllowed(true)
+                        .add(R.id.fragment_container_view, fragmentClass, null)
+                        .commit();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Failed to retrieve Fragment Layout View",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    private Class determineFragment(Bundle extras) throws Exception {
+        int fragmentId = extras.getInt("fragmentLayoutId");
+        switch (fragmentId) {
+            case R.layout.fragment_student_select_residence:
+                return StudentSelectResidenceFragment.class;
+            case R.layout.fragment_student_services:
+                return StudentServicesFragment.class;
+            default:
+                throw new Exception("Unexpected Fragment ID Value");
+        }
     }
 }
