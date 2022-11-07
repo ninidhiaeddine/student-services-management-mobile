@@ -20,6 +20,12 @@
     <string name="log_out">Log Out</string>
     <string name="proceed">Proceed</string>
     <string name="choose_residence">Choose Residence</string>
+    <string name="full_name">Full Name</string>
+    <string name="id">ID#</string>
+    <string name="service">Service</string>
+    <string name="date">Date</string>
+    <string name="time_slot">Time Slot</string>
+    <string name="cancel_reservation">Cancel Reservation</string>
 
     <string-array name="residences_array">
         <item>Kerr I Hall</item>

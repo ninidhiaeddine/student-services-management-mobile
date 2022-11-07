@@ -14,6 +14,12 @@
         android:theme="@style/Theme.StudentServicesManagementApp"
         tools:targetApi="31">
         <activity
+            android:name=".StudentBookingCalendarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentBookingDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ProfileToolbarActivity"
             android:exported="false" />
         <activity
