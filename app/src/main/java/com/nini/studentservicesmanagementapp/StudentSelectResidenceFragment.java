@@ -30,17 +30,6 @@ public class StudentSelectResidenceFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_student_select_residence, container, false);
-
-        populateSpinner(view);
-
         return view;
-    }
-
-    private void populateSpinner(View view) {
-        Spinner spinner = (Spinner) view.findViewById(R.id.spinner_residences);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.residences_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
     }
 }

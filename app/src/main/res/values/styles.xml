@@ -15,7 +15,7 @@
     </style>
 
     <style name="MyTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">?android:colorPrimary</item>
+        <item name="strokeColor">?android:colorPrimary</item>
         <item name="hintTextColor">?android:colorPrimary</item>
         <item name="android:textColorHint">?android:colorPrimary</item>
     </style>

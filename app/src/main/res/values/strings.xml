@@ -19,6 +19,7 @@
     <string name="help">Help</string>
     <string name="log_out">Log Out</string>
     <string name="proceed">Proceed</string>
+    <string name="choose_residence">Choose Residence</string>
 
     <string-array name="residences_array">
         <item>Kerr I Hall</item>

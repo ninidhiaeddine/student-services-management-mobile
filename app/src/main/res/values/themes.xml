@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.StudentServicesManagementApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.StudentServicesManagementApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#26D1B3</item>
         <item name="colorPrimaryVariant">#68E2CD</item>
