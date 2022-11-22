@@ -32,6 +32,17 @@
     <string name="id_n_a">ID# N/A</string>
     <string name="srv_n_a">#SRV-N/A</string>
     <string name="reservation_date">Reservation Date</string>
+    <string name="incremental_set_up">Incremental Set Up</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="customizable_time_slots">Customizable Time Slots</string>
+    <string name="customize_time_slots">Customize Time Slots</string>
+    <string name="customize_slots_text2">Try to customize your time slots!</string>
+    <string name="customize_slots_text1">Do you feel like the incremental method is not enough to set up your time slots?</string>
+    <string name="slot_length">Slot Length</string>
+    <string name="maximum_capacity">Maximum Capacity</string>
+    <string name="date_range">Date Range</string>
+    <string name="minutes">Minutes</string>
+    <string name="hours">Hours</string>
 
     <string-array name="residences_array">
         <item>Kerr I Hall</item>
