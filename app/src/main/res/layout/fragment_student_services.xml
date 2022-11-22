@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".StudentServicesFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <TextView
+            android:id="@+id/textViewServices1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/dorms_services"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewServices1">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_laundry"
+                style="@style/ServiceButton"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_laundry"
+                android:text="@string/laundry"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_cleaning"
+                style="@style/ServiceButton"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_cleaning"
+                android:text="@string/room_cleaning"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewServices2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/charles_hostler_services"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout1" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewServices2">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_gym"
+                style="@style/ServiceButton"
+                android:layout_width="300dp"
+                android:layout_height="180dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_gym"
+                android:text="@string/gym" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_pool"
+                style="@style/ServiceButton"
+                android:layout_width="300dp"
+                android:layout_height="180dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_pool"
+                android:text="@string/pool" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
