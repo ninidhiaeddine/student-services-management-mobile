@@ -9,8 +9,7 @@
     android:layout_gravity="center"
     android:layout_marginStart="32dp"
     android:layout_marginEnd="32dp"
-    tools:context=".StudentSelectResidenceFragment"
-    android:background="@color/background">
+    tools:context=".StudentSelectResidenceFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/dropdown_menu"

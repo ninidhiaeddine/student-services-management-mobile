@@ -14,14 +14,23 @@
         android:theme="@style/Theme.StudentServicesManagementApp"
         tools:targetApi="31">
         <activity
-            android:name=".StudentBookingCalendarActivity"
+            android:name=".AdminSetUpTimeSlotsActivity"
             android:exported="false" />
+        <activity
+            android:name=".AdminViewReservationDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminBookingsCalendarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentBookingCalendarActivity"
+            android:exported="true" />
         <activity
             android:name=".StudentBookingDetailsActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ProfileToolbarActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".StudentLoginActivity"
             android:exported="true" />

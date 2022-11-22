@@ -26,6 +26,12 @@
     <string name="date">Date</string>
     <string name="time_slot">Time Slot</string>
     <string name="cancel_reservation">Cancel Reservation</string>
+    <string name="time_slots">Time Slots</string>
+    <string name="capacity">Capacity</string>
+    <string name="available">Available</string>
+    <string name="id_n_a">ID# N/A</string>
+    <string name="srv_n_a">#SRV-N/A</string>
+    <string name="reservation_date">Reservation Date</string>
 
     <string-array name="residences_array">
         <item>Kerr I Hall</item>
