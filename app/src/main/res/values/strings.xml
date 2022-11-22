@@ -43,6 +43,9 @@
     <string name="date_range">Date Range</string>
     <string name="minutes">Minutes</string>
     <string name="hours">Hours</string>
+    <string name="add_slot">Add Slot</string>
+    <string name="available_time_slots">Available Time Slots</string>
+    <string name="select_date">Select Date</string>
 
     <string-array name="residences_array">
         <item>Kerr I Hall</item>
