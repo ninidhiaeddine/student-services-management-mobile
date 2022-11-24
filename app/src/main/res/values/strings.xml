@@ -46,15 +46,32 @@
     <string name="add_slot">Add Slot</string>
     <string name="available_time_slots">Available Time Slots</string>
     <string name="select_date">Select Date</string>
+    <string name="i_am_a_dorms_student">I am a dorms student</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="aub_email">AUB Email</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="id_number">ID Number</string>
+    <string name="student_sign_up">Student Sign Up</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="gender">Gender</string>
 
-    <string-array name="residences_array">
+    <string-array name="male_residences_array">
         <item>Kerr I Hall</item>
         <item>Penrose Hall</item>
+    </string-array>
+
+    <string-array name="female_residences_array">
         <item>Kerr II Hall</item>
         <item>New Women\'s Dorms</item>
         <item>Murex Hall</item>
         <item>Boustany Hall</item>
         <item>Jewett Hall</item>
         <item>Off-campus (Mayfair)</item>
+    </string-array>
+
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
     </string-array>
 </resources>

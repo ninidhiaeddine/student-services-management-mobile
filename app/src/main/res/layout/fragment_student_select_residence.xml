@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
-            app:simpleItems="@array/residences_array"
+            app:simpleItems="@array/male_residences_array"
             tools:ignore="LabelFor" />
 
     </com.google.android.material.textfield.TextInputLayout>
