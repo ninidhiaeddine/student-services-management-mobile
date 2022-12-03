@@ -1,64 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StudentLoginActivity" >
+    android:background="#262837"
+    tools:context=".AdminLoginActivity">
 
     <ImageView
-        android:id="@+id/imageViewLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/imageView11"
+        android:layout_width="298dp"
+        android:layout_height="283dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/image_logo"
-        android:contentDescription="@string/app_logo" />
+        app:srcCompat="@drawable/picture1" />
 
     <TextView
-        android:id="@+id/textViewAppTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/student_services_management"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/textView10"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="316dp"
+        android:text="Student Management App"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo"
-        style="@style/AppTitle" />
-
-    <TextView
-        android:id="@+id/textViewStudentLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/student_login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAppTitle"
-        style="@style/SubHeader" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_width="305dp"
+        android:layout_height="261dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="388dp"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewStudentLogin">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailInputLayout"
-            style="@style/MyTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:boxStrokeColor="?android:colorPrimary"
             app:startIconDrawable="@drawable/ic_baseline_email_24"
+            app:startIconTint="?android:colorPrimary"
             app:suffixText="\@mail.aub.edu"
             app:suffixTextColor="#666666">
 
@@ -66,25 +54,27 @@
                 android:id="@+id/emailInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordInputLayout"
-            style="@style/MyTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             app:boxStrokeColor="?android:colorPrimary"
             app:endIconMode="password_toggle"
-            app:startIconDrawable="@drawable/ic_baseline_lock_24">
+            app:endIconTint="?android:colorPrimary"
+            app:startIconDrawable="@drawable/ic_baseline_lock_24"
+            app:startIconTint="?android:colorPrimary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/password"
+                android:hint="password"
                 android:inputType="textPassword"
                 android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -94,8 +84,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="@string/login"
+            android:background="#26D1B3"
             android:onClick="loginOnClick"
+            android:text="Login"
+            app:iconTint="#26D1B3"
             tools:ignore="UsingOnClickInXml" />
 
     </LinearLayout>
