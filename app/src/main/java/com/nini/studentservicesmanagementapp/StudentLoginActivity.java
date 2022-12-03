@@ -29,4 +29,9 @@ public class StudentLoginActivity extends AppCompatActivity {
         // start activity:
         startActivity(intent);
     }
+
+    public void signUpOnClick(View view) {
+        Intent intent = new Intent(StudentLoginActivity.this, StudentSignUpActivity.class);
+        startActivity(intent);
+    }
 }
