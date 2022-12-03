@@ -3,26 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
     tools:context=".StudentServicesFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
         <TextView
             android:id="@+id/textViewServices1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:layout_gravity="center"
             android:text="@string/dorms_services"
             android:textColor="@color/white"
             android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/linearLayout1"
@@ -30,10 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
-            android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewServices1">
+            android:padding="16dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_laundry"
@@ -43,7 +40,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:drawableTop="@drawable/ic_laundry"
-                android:text="@string/laundry"/>
+                android:text="@string/laundry" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_cleaning"
@@ -53,7 +50,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:drawableTop="@drawable/ic_cleaning"
-                android:text="@string/room_cleaning"/>
+                android:text="@string/room_cleaning" />
         </LinearLayout>
 
         <TextView
@@ -61,13 +58,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_gravity="center"
             android:text="@string/charles_hostler_services"
             android:textColor="@color/white"
             android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout1" />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -75,10 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
-            android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewServices2">
+            android:padding="16dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_gym"
@@ -101,6 +93,6 @@
                 android:text="@string/pool" />
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </FrameLayout>
