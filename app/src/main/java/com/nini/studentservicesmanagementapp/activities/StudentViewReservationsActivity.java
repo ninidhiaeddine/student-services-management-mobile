@@ -1,8 +1,10 @@
-package com.nini.studentservicesmanagementapp;
+package com.nini.studentservicesmanagementapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.nini.studentservicesmanagementapp.R;
 
 public class StudentViewReservationsActivity extends AppCompatActivity {
 

@@ -1,10 +1,12 @@
-package com.nini.studentservicesmanagementapp;
+package com.nini.studentservicesmanagementapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.nini.studentservicesmanagementapp.R;
 
 public class AdminLoginActivity extends AppCompatActivity {
 

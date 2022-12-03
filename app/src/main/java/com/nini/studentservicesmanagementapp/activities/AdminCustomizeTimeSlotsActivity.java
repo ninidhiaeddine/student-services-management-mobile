@@ -1,31 +1,32 @@
-package com.nini.studentservicesmanagementapp;
+package com.nini.studentservicesmanagementapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.CalendarView;
 
-import java.util.Calendar;
+import com.nini.studentservicesmanagementapp.R;
+
 import java.util.Date;
 
-public class StudentBookingCalendarActivity extends AppCompatActivity {
-    private CalendarView calendarView;
+public class AdminCustomizeTimeSlotsActivity extends AppCompatActivity {
+    private CalendarView adminCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_booking_calendar);
+        setContentView(R.layout.activity_admin_customize_time_slots);
 
         findViews();
         setUpCalendarView();
     }
 
     private void findViews() {
-        calendarView = findViewById(R.id.calendarView);
+        adminCalendar = findViewById(R.id.calendar_admin);
     }
 
     private void setUpCalendarView() {
         Date today = new Date();
-        calendarView.setMinDate(today.getTime());
+        adminCalendar.setMinDate(today.getTime());
     }
 }

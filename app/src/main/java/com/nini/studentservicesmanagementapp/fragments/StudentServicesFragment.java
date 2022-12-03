@@ -1,4 +1,4 @@
-package com.nini.studentservicesmanagementapp;
+package com.nini.studentservicesmanagementapp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.nini.studentservicesmanagementapp.R;
+import com.nini.studentservicesmanagementapp.activities.ProfileToolbarActivity;
 
 public class StudentServicesFragment extends Fragment {
     private View view;

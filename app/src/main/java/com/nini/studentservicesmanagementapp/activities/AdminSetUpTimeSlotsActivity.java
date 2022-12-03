@@ -1,4 +1,4 @@
-package com.nini.studentservicesmanagementapp;
+package com.nini.studentservicesmanagementapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
@@ -13,6 +13,7 @@ import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.nini.studentservicesmanagementapp.R;
 
 import java.util.Calendar;
 import java.util.Date;

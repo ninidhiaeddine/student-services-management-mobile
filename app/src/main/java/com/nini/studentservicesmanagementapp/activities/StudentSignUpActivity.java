@@ -1,4 +1,4 @@
-package com.nini.studentservicesmanagementapp;
+package com.nini.studentservicesmanagementapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.nini.studentservicesmanagementapp.R;
 
 public class StudentSignUpActivity extends AppCompatActivity {
     // views:

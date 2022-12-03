@@ -1,10 +1,12 @@
-package com.nini.studentservicesmanagementapp;
+package com.nini.studentservicesmanagementapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.nini.studentservicesmanagementapp.R;
 
 public class StudentLoginActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();

@@ -1,4 +1,4 @@
-package com.nini.studentservicesmanagementapp;
+package com.nini.studentservicesmanagementapp.activities;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,9 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.nini.studentservicesmanagementapp.R;
+import com.nini.studentservicesmanagementapp.fragments.StudentSelectResidenceFragment;
+import com.nini.studentservicesmanagementapp.fragments.StudentServicesFragment;
 
 public class ProfileToolbarActivity extends AppCompatActivity {
     protected DrawerLayout drawerLayout;
