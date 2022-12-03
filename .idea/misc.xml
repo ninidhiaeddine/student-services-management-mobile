@@ -19,20 +19,31 @@
         <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/drawable/time_slot_background.xml" value="0.126" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_admin_bookings_calendar.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_admin_customize_time_slots.xml" value="0.22" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_admin_login.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_admin_set_up_time_slots.xml" value="0.22" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_admin_sign_up.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_admin_signup.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_admin_view_reservation_details.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_first_screen.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_main.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_profile_toolbar.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_student_booking_calendar.xml" value="0.22" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_student_booking_details.xml" value="0.22" />
-        <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_student_login.xml" value="0.22" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_student_login.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_student_select_residence.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_student_services.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_admin_login.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_admin_scan_qr_code.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_admin_sign_up.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_firstscreen.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/activity_student_sign_up.xml" value="0.22" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/fragment_student_select_residence.xml" value="0.22" />
-        <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/fragment_student_services.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/fragment_student_services.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/header_navigation_drawer.xml" value="0.12" />
-        <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/reservation_details.xml" value="0.22" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/homepage.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/reservation_details.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/student_booking_confirmation.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/student_view_current_reservations.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/time_slot.xml" value="0.22" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/layout/toolbar.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/StudentServicesManagementApp/app/src/main/res/menu/header_navigation_drawer.xml" value="0.17552083333333332" />
