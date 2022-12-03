@@ -55,6 +55,14 @@
     <string name="student_sign_up">Student Sign Up</string>
     <string name="sign_up">Sign Up</string>
     <string name="gender">Gender</string>
+    <string name="admin_login">Admin Login</string>
+    <string name="scanning_reservation_qr_code">Scanning Reservation QR Code</string>
+    <string name="admin_sign_up">Admin Sign Up</string>
+    <string name="intro_text">Get ready to make your life easier with a single click in the app.</string>
+    <string name="get_started">Get started</string>
+    <string name="i_am_a">I am a</string>
+    <string name="student">Student</string>
+    <string name="admin">Admin</string>
 
     <string-array name="male_residences_array">
         <item>Kerr I Hall</item>

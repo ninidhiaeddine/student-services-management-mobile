@@ -6,84 +6,64 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/image_logo"
+        android:contentDescription="@string/app_logo" />
+
+    <TextView
+        android:id="@+id/textViewAppTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/student_services_management"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo"
+        style="@style/AppTitle" />
+
+    <TextView
+        android:id="@+id/text_get_started"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="@string/i_am_a"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAppTitle" />
+
+    <Button
+        android:id="@+id/button_student"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#262837"
-        android:padding="20px"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="-179dp">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/student"
+        android:drawableEnd="@drawable/ic_student"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_get_started" />
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="298dp"
-            android:layout_height="283dp"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="28dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/picture1" />
+    <Button
+        android:id="@+id/button_admin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/admin"
+        android:drawableEnd="@drawable/ic_admin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_student" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="36dp"
-            android:text="Student Management App"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="175dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="96dp"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="50px"
-            android:paddingRight="50px"
-            android:text="I am a"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-        <Button
-            android:id="@+id/GetstartedBtn"
-            android:layout_width="211dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="80dp"
-            android:layout_marginTop="24dp"
-            android:background="#26D1B3"
-            android:backgroundTint="#26D1B3"
-            android:paddingTop="30px"
-            android:text="Admin"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            app:cornerRadius="32dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/StudentBtn" />
-
-        <Button
-            android:id="@+id/StudentBtn"
-            android:layout_width="211dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="80dp"
-            android:layout_marginTop="12dp"
-            android:background="#26D1B3"
-            android:backgroundTint="#26D1B3"
-            android:paddingTop="30px"
-            android:text="Student"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            app:cornerRadius="32dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
