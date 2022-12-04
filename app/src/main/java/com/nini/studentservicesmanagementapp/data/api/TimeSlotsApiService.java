@@ -2,13 +2,17 @@ package com.nini.studentservicesmanagementapp.data.api;
 
 import android.content.Context;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nini.studentservicesmanagementapp.data.dtos.TimeSlotDto;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TimeSlotsApiService extends ApiService {
     public TimeSlotsApiService(Context context) {
@@ -92,17 +96,23 @@ public class TimeSlotsApiService extends ApiService {
                         + endDateExclusive;
         final String URL = API_URL + ENDPOINT;
 
-        StringRequest stringRequest = makeGetStringRequest(URL, new VolleyCallback() {
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.GET,
+                URL,
+                response -> {
+                    callback.onSuccess(response);
+                },
+                error -> {
+                    callback.onError(error);
+                }
+        ) {
             @Override
-            public void onSuccess(String response) {
-                callback.onSuccess(response);
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + authorizationToken);
+                        return headers;
             }
-
-            @Override
-            public void onError(VolleyError error) {
-                callback.onError(error);
-            }
-        });
+        };
 
         queue.add(stringRequest);
     }
