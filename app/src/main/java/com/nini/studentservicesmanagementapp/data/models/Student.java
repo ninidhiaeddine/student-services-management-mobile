@@ -27,4 +27,8 @@ public class Student implements Cloneable {
             throw new AssertionError();
         }
     }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 }

@@ -8,22 +8,34 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.navigation.NavigationView;
 import com.nini.studentservicesmanagementapp.R;
+import com.nini.studentservicesmanagementapp.data.models.Student;
 import com.nini.studentservicesmanagementapp.fragments.StudentSelectResidenceFragment;
 import com.nini.studentservicesmanagementapp.fragments.StudentServicesFragment;
 
 public class ProfileToolbarActivity extends AppCompatActivity {
-    protected DrawerLayout drawerLayout;
-    protected NavigationView navigationView;
-    protected Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private Toolbar toolbar;
+    private TextView toolbarText;
+    private TextView drawerText;
+
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_toolbar);
+
+        // store intent:
+        intent = getIntent();
 
         // set up common UI:
         findViews();
@@ -32,12 +44,20 @@ public class ProfileToolbarActivity extends AppCompatActivity {
 
         // add specific fragment:
         addFragment();
+
+        // populate UI:
+        populateUi();
     }
 
     private void findViews() {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
         toolbar = findViewById(R.id.toolbar);
+        toolbarText = toolbar.findViewById(R.id.textViewName);
+
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        View parentView = navigationView.getHeaderView(0);
+        drawerText = parentView.findViewById(R.id.text_name_drawer);
     }
 
     private void setUpToolbar() {
@@ -51,8 +71,25 @@ public class ProfileToolbarActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
     }
 
+    private void populateUi() {
+        // get intent info:
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            String studentJson = extras.getString("studentJson");
+            ObjectMapper mapper = new ObjectMapper();
+            Student authenticatedStudent;
+            try {
+                authenticatedStudent = mapper.readValue(studentJson, Student.class);
+                toolbarText.setText(authenticatedStudent.getFullName());
+                drawerText.setText(authenticatedStudent.getFullName());
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @SuppressLint("NonConstantResourceId")
-    protected void setUpNavigationView() {
+    private void setUpNavigationView() {
         navigationView.setNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()) {
                 case R.id.reservations_item:
@@ -76,8 +113,6 @@ public class ProfileToolbarActivity extends AppCompatActivity {
     }
 
     private void addFragment() {
-        // get the intent:
-        Intent intent = getIntent();
         // extract the extras out of the intent:
         Bundle extras = intent.getExtras();
         try {
