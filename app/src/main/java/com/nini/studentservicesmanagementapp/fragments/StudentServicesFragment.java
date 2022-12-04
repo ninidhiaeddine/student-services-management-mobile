@@ -99,31 +99,17 @@ public class StudentServicesFragment extends Fragment {
     }
 
     private void laundryOnClick() {
-    // prepare extras and put necessary info in it:
-        Bundle extras;
-        extras = new Bundle();
-        extras.putInt("fragmentLayoutId", R.layout.fragment_student_select_residence);
-
-        // prepare intent for next activity:
-        Intent intent = new Intent(getActivity(), ProfileToolbarActivity.class);
-        intent.putExtras(extras);
-
-        // restart activity:
-        startActivity(intent);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.fragment_container_view, StudentSelectResidenceFragment.class, null)
+                .commit();
     }
 
     private void cleaningOnClick() {
-        // prepare extras and put necessary info in it:
-        Bundle extras;
-        extras = new Bundle();
-        extras.putInt("fragmentLayoutId", R.layout.fragment_student_select_residence);
-
-        // prepare intent for next activity:
-        Intent intent = new Intent(getActivity(), ProfileToolbarActivity.class);
-        intent.putExtras(extras);
-
-        // restart activity:
-        startActivity(intent);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.fragment_container_view, StudentSelectResidenceFragment.class, null)
+                .commit();
     }
 
     private void gymOnClick() {
