@@ -31,14 +31,9 @@
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"/>
 
         <TableLayout
+            android:id="@+id/table_time_slots"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-        </TableLayout>
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
