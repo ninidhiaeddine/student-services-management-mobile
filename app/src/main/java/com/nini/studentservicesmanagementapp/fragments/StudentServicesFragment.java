@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nini.studentservicesmanagementapp.R;
 import com.nini.studentservicesmanagementapp.activities.ProfileToolbarActivity;
 import com.nini.studentservicesmanagementapp.data.models.Student;
+import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
 
 public class StudentServicesFragment extends Fragment {
     private View view;
@@ -48,11 +49,11 @@ public class StudentServicesFragment extends Fragment {
                              Bundle savedInstanceState) {
         this.view = inflater.inflate(R.layout.fragment_student_services, container, false);
 
+        this.intent = getActivity().getIntent();
         findViews();
         setUpClickListeners();
 
         // set up conditional view:
-        intent = getActivity().getIntent();
         setUpConditionalView();
 
         return view;
@@ -75,30 +76,19 @@ public class StudentServicesFragment extends Fragment {
     }
 
     private void setUpConditionalView() {
-        if (intent == null)
-            return;
+        Student authenticatedStudent = SharedPrefsKeys.getAuthenticatedStudent(getActivity());
 
-        // extract student json:
-        Bundle extras = intent.getExtras();
-        String studentJson = extras.getString("studentJson");
-
-        // map student json to student object:
-        ObjectMapper mapper = new ObjectMapper();
-        Student authenticatedStudent = null;
-        try {
-            authenticatedStudent = mapper.readValue(studentJson, Student.class);
-
-            // check whether student belongs to dorms:
-            if (authenticatedStudent.isDorms == 0) {
-                textDormsServices.setVisibility(View.GONE);
-                layoutDormsServices.setVisibility(View.GONE);
-            }
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+        // check whether student belongs to dorms:
+        if (authenticatedStudent.isDorms == 0) {
+            textDormsServices.setVisibility(View.GONE);
+            layoutDormsServices.setVisibility(View.GONE);
         }
     }
 
     private void laundryOnClick() {
+        Bundle extras = intent.getExtras();
+        extras.putInt("serviceType", 0);
+
         getActivity().getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(R.id.fragment_container_view, StudentSelectResidenceFragment.class, null)
@@ -106,6 +96,9 @@ public class StudentServicesFragment extends Fragment {
     }
 
     private void cleaningOnClick() {
+        Bundle extras = intent.getExtras();
+        extras.putInt("serviceType", 1);
+
         getActivity().getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(R.id.fragment_container_view, StudentSelectResidenceFragment.class, null)
@@ -114,9 +107,13 @@ public class StudentServicesFragment extends Fragment {
 
     private void gymOnClick() {
         // TODO: Logic goes here:
+        Bundle extras = intent.getExtras();
+        extras.putInt("serviceType", 2);
     }
 
     private void poolOnClick() {
         // TODO: Logic goes here:
+        Bundle extras = intent.getExtras();
+        extras.putInt("serviceType", 3);
     }
 }

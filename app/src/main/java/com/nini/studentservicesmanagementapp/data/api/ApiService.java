@@ -1,6 +1,7 @@
 package com.nini.studentservicesmanagementapp.data.api;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -8,6 +9,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
 
 import java.nio.charset.StandardCharsets;
 
@@ -15,10 +17,20 @@ public class ApiService {
     protected final static String API_URL = "https://10.0.2.2:7093/api";
     protected final RequestQueue queue;
     protected final ObjectMapper mapper;
+    protected String authorizationToken;
 
     public ApiService(Context context) {
         queue = Volley.newRequestQueue(context);
         mapper = new ObjectMapper();
+        getAuthorizationToken(context);
+    }
+
+    private void getAuthorizationToken(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(
+                SharedPrefsKeys.SHARED_PREFS,
+                Context.MODE_PRIVATE
+        );
+        prefs.getString(SharedPrefsKeys.AUTHORIZATION_TOKEN_KEY, "");
     }
 
     public static StringRequest makeGetStringRequest(String url, final VolleyCallback callback) {

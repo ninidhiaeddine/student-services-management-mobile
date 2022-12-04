@@ -63,7 +63,6 @@
     <string name="i_am_a">I am a</string>
     <string name="student">Student</string>
     <string name="admin">Admin</string>
-    <string name="preference_file_key">com.nini.studentservicesmanagementapp.PREFERENCE_FILE_KEY</string>
 
     <string-array name="male_residences_array">
         <item>Kerr I Hall</item>

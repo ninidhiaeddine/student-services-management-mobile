@@ -1,6 +1,7 @@
 package com.nini.studentservicesmanagementapp.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import com.nini.studentservicesmanagementapp.R;
 import com.nini.studentservicesmanagementapp.data.api.AuthApiService;
 import com.nini.studentservicesmanagementapp.data.api.VolleyCallback;
 import com.nini.studentservicesmanagementapp.data.dtos.SignInDto;
+import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
 
 public class StudentLoginActivity extends AppCompatActivity implements FormValidator {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -29,6 +31,7 @@ public class StudentLoginActivity extends AppCompatActivity implements FormValid
     private TextInputEditText emailInputEditText;
     private TextInputEditText passwordInputEditText;
 
+    // mapper:
     private ObjectMapper mapper;
 
     @Override
@@ -64,16 +67,19 @@ public class StudentLoginActivity extends AppCompatActivity implements FormValid
             apiService.signInStudent(dto, new VolleyCallback() {
                 @Override
                 public void onSuccess(String response) {
-                    // get token:
+                    // get token and store in shared prefs:
                     String token = response;
+                    storeAuthorizationTokenInSharedPrefs(token);
 
-                    // get current user data:
+
+                    // get current user data and store in shared prefs:
                     apiService.getCurrentStudent(token, new VolleyCallback() {
                         @Override
                         public void onSuccess(String response) {
+                            storeAuthenticatedStudentInSharedPrefs(response);
+
                             // create extras and put necessary info:
                             Bundle extras = new Bundle();
-                            extras.putString("studentJson", response);
                             extras.putInt("fragmentLayoutId", R.layout.fragment_student_services);
 
                             // prepare intent for new activity:
@@ -92,6 +98,41 @@ public class StudentLoginActivity extends AppCompatActivity implements FormValid
                             Toast.makeText(StudentLoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
                         }
                     });
+                }
+
+                private void storeAuthenticatedStudentInSharedPrefs(String studentJson) {
+                    // convert student json to student object:
+                    Student authenticatedStudent;
+                    try {
+                        authenticatedStudent = mapper.readValue(studentJson, Student.class);
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                        return;
+                    }
+
+                    SharedPreferences prefs = getSharedPreferences(
+                            SharedPrefsKeys.SHARED_PREFS,
+                            MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+
+                    editor.putString(SharedPrefsKeys.FIRST_NAME_KEY, authenticatedStudent.firstName);
+                    editor.putString(SharedPrefsKeys.LAST_NAME_KEY, authenticatedStudent.lastName);
+                    editor.putString(SharedPrefsKeys.EMAIL_KEY, authenticatedStudent.email);
+                    editor.putString(SharedPrefsKeys.PASSWORD_KEY, dto.password);
+                    editor.putInt(SharedPrefsKeys.STUDENT_ID_KEY, authenticatedStudent.studentId);
+                    editor.putInt(SharedPrefsKeys.GENDER_KEY, authenticatedStudent.gender);
+                    editor.putInt(SharedPrefsKeys.IS_DORMS_KEY, authenticatedStudent.isDorms);
+
+                    editor.apply();
+                }
+
+                private void storeAuthorizationTokenInSharedPrefs(String token) {
+                    SharedPreferences prefs = getSharedPreferences(
+                            SharedPrefsKeys.SHARED_PREFS,
+                            MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString(SharedPrefsKeys.AUTHORIZATION_TOKEN_KEY, token);
+                    editor.apply();
                 }
 
                 @Override

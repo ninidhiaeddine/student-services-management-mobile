@@ -11,15 +11,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nini.studentservicesmanagementapp.R;
+import com.nini.studentservicesmanagementapp.activities.StudentBookingCalendarActivity;
 import com.nini.studentservicesmanagementapp.data.models.Student;
+import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
 
 public class StudentSelectResidenceFragment extends Fragment {
     private View view;
-    private Intent intent;
     private AutoCompleteTextView dropdownResidences;
+
+    private Intent intent;
 
     public StudentSelectResidenceFragment() {
         // Required empty public constructor
@@ -41,9 +42,9 @@ public class StudentSelectResidenceFragment extends Fragment {
         // Inflate the layout for this fragment
         this.view = inflater.inflate(R.layout.fragment_student_select_residence, container, false);
 
+        this.intent = getActivity().getIntent();
         findViews();
         // set up conditional view:
-        intent = getActivity().getIntent();
         setUpConditionalView();
 
         return view;
@@ -54,34 +55,35 @@ public class StudentSelectResidenceFragment extends Fragment {
     }
 
     private void setUpConditionalView() {
-        if (intent == null)
-            return;
+        Student authenticatedStudent = SharedPrefsKeys.getAuthenticatedStudent(getActivity());
 
-        // extract student json:
-        Bundle extras = intent.getExtras();
-        String studentJson = extras.getString("studentJson");
-
-        // map student json to student object:
-        ObjectMapper mapper = new ObjectMapper();
-        Student authenticatedStudent = null;
-        try {
-            authenticatedStudent = mapper.readValue(studentJson, Student.class);
-
-            // check whether student is male or female:
-            String[] residencesArray;
-            if (authenticatedStudent.gender == 0) {
-                residencesArray = getResources().getStringArray(R.array.male_residences_array);
-            } else {
-                residencesArray = getResources().getStringArray(R.array.female_residences_array);
-            }
-
-            ArrayAdapter adapter = new ArrayAdapter(
-                    getActivity(),
-                    androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                    residencesArray);
-            dropdownResidences.setAdapter(adapter);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+        // check whether student is male or female:
+        String[] residencesArray;
+        if (authenticatedStudent.gender == 0) {
+            residencesArray = getResources().getStringArray(R.array.male_residences_array);
+        } else {
+            residencesArray = getResources().getStringArray(R.array.female_residences_array);
         }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                getActivity(),
+                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+                residencesArray);
+        dropdownResidences.setAdapter(adapter);
+    }
+
+    public void proceedOnClick(View view) {
+        Bundle extras = intent.getExtras();
+
+        // put residence information inside bundle:
+        String selectedResidenceName = dropdownResidences.getText().toString();
+        extras.putString("residenceName", selectedResidenceName);
+
+        // prepare intent:
+        Intent intent = new Intent(getActivity(), StudentBookingCalendarActivity.class);
+        intent.putExtras(extras);
+
+        // start activity:
+        startActivity(intent);
     }
 }

@@ -19,6 +19,7 @@ import com.nini.studentservicesmanagementapp.R;
 import com.nini.studentservicesmanagementapp.data.models.Student;
 import com.nini.studentservicesmanagementapp.fragments.StudentSelectResidenceFragment;
 import com.nini.studentservicesmanagementapp.fragments.StudentServicesFragment;
+import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
 
 public class ProfileToolbarActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -27,15 +28,10 @@ public class ProfileToolbarActivity extends AppCompatActivity {
     private TextView toolbarText;
     private TextView drawerText;
 
-    private Intent intent;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_toolbar);
-
-        // store intent:
-        intent = getIntent();
 
         // set up common UI:
         findViews();
@@ -72,20 +68,12 @@ public class ProfileToolbarActivity extends AppCompatActivity {
     }
 
     private void populateUi() {
-        // get intent info:
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            String studentJson = extras.getString("studentJson");
-            ObjectMapper mapper = new ObjectMapper();
-            Student authenticatedStudent;
-            try {
-                authenticatedStudent = mapper.readValue(studentJson, Student.class);
-                toolbarText.setText(authenticatedStudent.getFullName());
-                drawerText.setText(authenticatedStudent.getFullName());
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-        }
+        // get authenticated student info:
+        Student authenticatedStudent = SharedPrefsKeys.getAuthenticatedStudent(this);
+
+        // populate ui:
+        toolbarText.setText(authenticatedStudent.getFullName());
+        drawerText.setText(authenticatedStudent.getFullName());
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -114,6 +102,7 @@ public class ProfileToolbarActivity extends AppCompatActivity {
 
     private void addFragment() {
         // extract the extras out of the intent:
+        Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         try {
             if (extras != null) {

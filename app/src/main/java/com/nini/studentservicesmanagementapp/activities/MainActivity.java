@@ -8,8 +8,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
-import com.google.android.gms.security.ProviderInstaller;
 import com.nini.studentservicesmanagementapp.R;
+import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
 
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
@@ -22,7 +22,6 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void startFirstScreenIfFirstRun() {
         SharedPreferences prefs = getSharedPreferences(
-                String.valueOf(R.string.preference_file_key),
+                SharedPrefsKeys.SHARED_PREFS,
                 MODE_PRIVATE);
-        boolean firstRun = prefs.getBoolean("firstRun", true);
+        boolean firstRun = prefs.getBoolean(SharedPrefsKeys.FIRST_RUN_KEY, true);
 
         if (firstRun)
         {
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
             // set value:
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("firstRun", false);
+            editor.putBoolean(SharedPrefsKeys.FIRST_RUN_KEY, false);
             editor.apply();
 
             // start activity:
