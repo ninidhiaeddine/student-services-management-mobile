@@ -12,24 +12,24 @@ import com.nini.studentservicesmanagementapp.R;
 
 public class StudentSignUpActivity extends AppCompatActivity {
     // views:
-    TextInputLayout firstNameInputLayout;
-    TextInputLayout lastNameInputLayout;
-    TextInputLayout aubEmailInputLayout;
-    TextInputLayout idNumberInputLayout;
-    TextInputLayout passwordInputLayout;
-    TextInputLayout confirmPasswordInputLayout;
+    private TextInputLayout firstNameInputLayout;
+    private TextInputLayout lastNameInputLayout;
+    private TextInputLayout aubEmailInputLayout;
+    private TextInputLayout idNumberInputLayout;
+    private TextInputLayout passwordInputLayout;
+    private TextInputLayout confirmPasswordInputLayout;
 
-    TextInputEditText firstNameEditText;
-    TextInputEditText lastNameEditText;
-    TextInputEditText aubEmailEditText;
-    TextInputEditText idNumberEditText;
-    TextInputEditText passwordEditText;
-    TextInputEditText confirmPasswordEditText;
+    private TextInputEditText firstNameEditText;
+    private TextInputEditText lastNameEditText;
+    private TextInputEditText aubEmailEditText;
+    private TextInputEditText idNumberEditText;
+    private TextInputEditText passwordEditText;
+    private TextInputEditText confirmPasswordEditText;
 
-    TextInputLayout genderDropdownLayout;
-    AutoCompleteTextView genderDropdown;
+    private TextInputLayout genderDropdownLayout;
+    private AutoCompleteTextView genderDropdown;
 
-    Button signUpButton;
+    private Button signUpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

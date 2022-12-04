@@ -2,6 +2,7 @@ package com.nini.studentservicesmanagementapp.data.api;
 
 import android.content.Context;
 
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nini.studentservicesmanagementapp.data.dtos.TimeSlotDto;
@@ -28,7 +29,7 @@ public class TimeSlotsApiService extends ApiService {
                 }
 
                 @Override
-                public void onError(String error) {
+                public void onError(VolleyError error) {
                     callback.onError(error);
                 }
             });
@@ -50,7 +51,7 @@ public class TimeSlotsApiService extends ApiService {
             }
 
             @Override
-            public void onError(String error) {
+            public void onError(VolleyError error) {
                 callback.onError(error);
             }
         });
@@ -69,7 +70,7 @@ public class TimeSlotsApiService extends ApiService {
             }
 
             @Override
-            public void onError(String error) {
+            public void onError(VolleyError error) {
                 callback.onError(error);
             }
         });
@@ -98,7 +99,7 @@ public class TimeSlotsApiService extends ApiService {
             }
 
             @Override
-            public void onError(String error) {
+            public void onError(VolleyError error) {
                 callback.onError(error);
             }
         });
@@ -122,7 +123,7 @@ public class TimeSlotsApiService extends ApiService {
                 }
 
                 @Override
-                public void onError(String error) {
+                public void onError(VolleyError error) {
                     callback.onError(error);
                 }
             });

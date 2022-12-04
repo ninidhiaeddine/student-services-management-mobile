@@ -1,6 +1,8 @@
 package com.nini.studentservicesmanagementapp.data.api;
 
+import com.android.volley.VolleyError;
+
 public interface VolleyCallback {
     void onSuccess(String response);
-    void onError(String error);
+    void onError(VolleyError error);
 }

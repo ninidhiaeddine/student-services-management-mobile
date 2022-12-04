@@ -2,6 +2,7 @@ package com.nini.studentservicesmanagementapp.data.repositories.sources;
 
 import android.util.Log;
 
+import com.android.volley.VolleyError;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nini.studentservicesmanagementapp.data.api.StudentsApiService;
@@ -36,8 +37,8 @@ public class StudentsDataSource {
             }
 
             @Override
-            public void onError(String error) {
-                Log.e("ERROR", error);
+            public void onError(VolleyError error) {
+                Log.e("ERROR", error.toString());
             }
         });
         return result;
@@ -57,8 +58,8 @@ public class StudentsDataSource {
             }
 
             @Override
-            public void onError(String error) {
-                Log.e("ERROR", error);
+            public void onError(VolleyError error) {
+                Log.e("ERROR", error.toString());
             }
         });
         return result;

@@ -2,8 +2,6 @@ package com.nini.studentservicesmanagementapp.data.api;
 
 import android.content.Context;
 
-import androidx.annotation.Nullable;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -12,10 +10,9 @@ import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
 
 public class ApiService {
-    protected final static String API_URL = "https://localhost:7093/api";
+    protected final static String API_URL = "https://10.0.2.2:7093/api";
     protected final RequestQueue queue;
     protected final ObjectMapper mapper;
 
@@ -32,7 +29,7 @@ public class ApiService {
                     callback.onSuccess(response);
                 },
                 error -> {
-                    callback.onError(error.toString());
+                    callback.onError(error);
                 });
     }
 
@@ -44,7 +41,7 @@ public class ApiService {
                     callback.onSuccess(response);
                 },
                 error -> {
-                    callback.onError(error.toString());
+                    callback.onError(error);
                 }
         ) {
             @Override
@@ -67,7 +64,7 @@ public class ApiService {
                     callback.onSuccess(response);
                 },
                 error -> {
-                    callback.onError(error.toString());
+                    callback.onError(error);
                 }
         ) {
             @Override
