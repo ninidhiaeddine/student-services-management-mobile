@@ -82,6 +82,9 @@ public class StudentLoginActivity extends AppCompatActivity implements FormValid
 
                             // start activity:
                             startActivity(intent);
+
+                            // kill login activity:
+                            finish();
                         }
 
                         @Override

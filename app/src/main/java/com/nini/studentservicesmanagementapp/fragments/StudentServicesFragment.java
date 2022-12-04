@@ -9,16 +9,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nini.studentservicesmanagementapp.R;
 import com.nini.studentservicesmanagementapp.activities.ProfileToolbarActivity;
+import com.nini.studentservicesmanagementapp.data.models.Student;
 
 public class StudentServicesFragment extends Fragment {
     private View view;
+    private TextView textDormsServices;
+    private LinearLayout layoutDormsServices;
     private Button buttonGym;
     private Button buttonLaundry;
     private Button buttonCleaning;
     private Button buttonPool;
+
+    private Intent intent;
 
     public StudentServicesFragment() {
         // Required empty public constructor
@@ -42,10 +51,16 @@ public class StudentServicesFragment extends Fragment {
         findViews();
         setUpClickListeners();
 
+        // set up conditional view:
+        intent = getActivity().getIntent();
+        setUpConditionalView();
+
         return view;
     }
 
     private void findViews() {
+        textDormsServices = this.view.findViewById(R.id.text_dorms_services);
+        layoutDormsServices = this.view.findViewById(R.id.layout_dorms_services);
         buttonCleaning = this.view.findViewById(R.id.button_cleaning);
         buttonLaundry = this.view.findViewById(R.id.button_laundry);
         buttonGym = this.view.findViewById(R.id.button_gym);
@@ -57,6 +72,30 @@ public class StudentServicesFragment extends Fragment {
         buttonLaundry.setOnClickListener(l -> laundryOnClick());
         buttonGym.setOnClickListener(l -> gymOnClick());
         buttonPool.setOnClickListener(l -> poolOnClick());
+    }
+
+    private void setUpConditionalView() {
+        if (intent == null)
+            return;
+
+        // extract student json:
+        Bundle extras = intent.getExtras();
+        String studentJson = extras.getString("studentJson");
+
+        // map student json to student object:
+        ObjectMapper mapper = new ObjectMapper();
+        Student authenticatedStudent = null;
+        try {
+            authenticatedStudent = mapper.readValue(studentJson, Student.class);
+
+            // check whether student belongs to dorms:
+            if (authenticatedStudent.isDorms == 0) {
+                textDormsServices.setVisibility(View.GONE);
+                layoutDormsServices.setVisibility(View.GONE);
+            }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     private void laundryOnClick() {

@@ -28,10 +28,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        handleSSLHandshake();
-
         // run first screen:
         startFirstScreenIfFirstRun();
+
+        // ssl handshake configuration:
+        handleSSLHandshake();
     }
 
     private void startFirstScreenIfFirstRun() {
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
             // start activity:
             startActivity(intent);
+            finish();
         }
     }
 

@@ -102,7 +102,7 @@ public class ProfileToolbarActivity extends AppCompatActivity {
                     // Do something here
                     break;
                 case R.id.log_out_item:
-                    // Do something here
+                    finish();
                     break;
                 default:
                     // Do nothing
@@ -117,7 +117,8 @@ public class ProfileToolbarActivity extends AppCompatActivity {
         Bundle extras = intent.getExtras();
         try {
             if (extras != null) {
-                Class fragmentClass = determineFragment(extras);
+                int fragmentId = extras.getInt("fragmentLayoutId");
+                Class fragmentClass = determineFragment(fragmentId);
                 getSupportFragmentManager().beginTransaction()
                         .setReorderingAllowed(true)
                         .add(R.id.fragment_container_view, fragmentClass, null)
@@ -130,9 +131,8 @@ public class ProfileToolbarActivity extends AppCompatActivity {
     }
 
     @SuppressLint("NonConstantResourceId")
-    private Class determineFragment(Bundle extras) throws Exception {
-        int fragmentId = extras.getInt("fragmentLayoutId");
-        switch (fragmentId) {
+    private Class determineFragment(int fragmentLayoutId) throws Exception {
+        switch (fragmentLayoutId) {
             case R.layout.fragment_student_select_residence:
                 return StudentSelectResidenceFragment.class;
             case R.layout.fragment_student_services:
