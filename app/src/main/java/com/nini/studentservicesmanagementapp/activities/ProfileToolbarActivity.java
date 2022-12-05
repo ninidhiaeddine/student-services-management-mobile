@@ -12,13 +12,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.navigation.NavigationView;
 import com.nini.studentservicesmanagementapp.R;
 import com.nini.studentservicesmanagementapp.data.models.Student;
 import com.nini.studentservicesmanagementapp.fragments.StudentSelectResidenceFragment;
-import com.nini.studentservicesmanagementapp.fragments.StudentServicesFragment;
+import com.nini.studentservicesmanagementapp.fragments.StudentHomeFragment;
 import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
 
 public class ProfileToolbarActivity extends AppCompatActivity {
@@ -124,8 +122,8 @@ public class ProfileToolbarActivity extends AppCompatActivity {
         switch (fragmentLayoutId) {
             case R.layout.fragment_student_select_residence:
                 return StudentSelectResidenceFragment.class;
-            case R.layout.fragment_student_services:
-                return StudentServicesFragment.class;
+            case R.layout.fragment_student_home:
+                return StudentHomeFragment.class;
             default:
                 throw new Exception("Unexpected Fragment ID Value");
         }

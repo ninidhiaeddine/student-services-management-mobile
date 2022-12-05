@@ -27,7 +27,32 @@ public class AuthApiService extends ApiService {
         signIn(ENDPOINT, signInDto, callback);
     }
 
-    public void getCurrentStudent(String authorizationToken, final VolleyCallback callback) {
+    public void getCurrentStudent(final VolleyCallback callback) {
+        final String ENDPOINT = "/auth/students/me";
+        final String URL = API_URL + ENDPOINT;
+
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.GET,
+                URL,
+                response -> {
+                    callback.onSuccess(response);
+                },
+                error -> {
+                    callback.onError(error);
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + authorizationToken);
+                return headers;
+            }
+        };
+
+        queue.add(stringRequest);
+    }
+
+    public void getCurrentAdmin(final VolleyCallback callback) {
         final String ENDPOINT = "/auth/students/me";
         final String URL = API_URL + ENDPOINT;
 

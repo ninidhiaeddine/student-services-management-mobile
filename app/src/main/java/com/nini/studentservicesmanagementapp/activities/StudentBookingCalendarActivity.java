@@ -43,8 +43,6 @@ public class StudentBookingCalendarActivity extends AppCompatActivity {
     private ObjectMapper mapper;
     private int serviceType;
 
-    private SharedPreferences prefs;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

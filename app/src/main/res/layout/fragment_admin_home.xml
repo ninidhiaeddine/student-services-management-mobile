@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".fragments.AdminHomeFragment">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_manage_reservations"
+        style="@style/AdminButton"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"
+        android:drawableTop="@drawable/ic_reservations"
+        android:text="@string/manage_reservations" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_set_up_time_slots"
+        style="@style/AdminButton"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"
+        android:drawableTop="@drawable/ic_time_slots"
+        android:text="@string/set_up_time_slots" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_scan_qr_code"
+        style="@style/AdminButton"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"
+        android:drawableTop="@drawable/ic_qr_code"
+        android:text="@string/scan_qr_code" />
+
+</LinearLayout>

@@ -73,14 +73,14 @@ public class StudentLoginActivity extends AppCompatActivity implements FormValid
 
 
                     // get current user data and store in shared prefs:
-                    apiService.getCurrentStudent(token, new VolleyCallback() {
+                    apiService.getCurrentStudent(new VolleyCallback() {
                         @Override
                         public void onSuccess(String response) {
                             storeAuthenticatedStudentInSharedPrefs(response);
 
                             // create extras and put necessary info:
                             Bundle extras = new Bundle();
-                            extras.putInt("fragmentLayoutId", R.layout.fragment_student_services);
+                            extras.putInt("fragmentLayoutId", R.layout.fragment_student_home);
 
                             // prepare intent for new activity:
                             Intent intent = new Intent(StudentLoginActivity.this, ProfileToolbarActivity.class);

@@ -12,14 +12,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nini.studentservicesmanagementapp.R;
-import com.nini.studentservicesmanagementapp.activities.ProfileToolbarActivity;
 import com.nini.studentservicesmanagementapp.data.models.Student;
 import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
 
-public class StudentServicesFragment extends Fragment {
+public class StudentHomeFragment extends Fragment {
     private View view;
     private TextView textDormsServices;
     private LinearLayout layoutDormsServices;
@@ -30,12 +27,12 @@ public class StudentServicesFragment extends Fragment {
 
     private Intent intent;
 
-    public StudentServicesFragment() {
+    public StudentHomeFragment() {
         // Required empty public constructor
     }
 
-    public static StudentServicesFragment newInstance(String param1, String param2) {
-        StudentServicesFragment fragment = new StudentServicesFragment();
+    public static StudentHomeFragment newInstance(String param1, String param2) {
+        StudentHomeFragment fragment = new StudentHomeFragment();
         return fragment;
     }
 
@@ -47,7 +44,7 @@ public class StudentServicesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.view = inflater.inflate(R.layout.fragment_student_services, container, false);
+        this.view = inflater.inflate(R.layout.fragment_student_home, container, false);
 
         this.intent = getActivity().getIntent();
         findViews();
