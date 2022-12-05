@@ -3,12 +3,15 @@ package com.nini.studentservicesmanagementapp.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.android.material.datepicker.CalendarConstraints;
@@ -20,14 +23,8 @@ import com.nini.studentservicesmanagementapp.data.api.TimeSlotsApiService;
 import com.nini.studentservicesmanagementapp.data.api.VolleyCallback;
 import com.nini.studentservicesmanagementapp.data.dtos.TimeSlotDto;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -60,6 +57,7 @@ public class AdminSetUpTimeSlotsActivity extends AppCompatActivity {
     private String dateRange;
     private int slotLengthHours = 0;
     private int slotLengthMinutes = 0;
+    private int serviceType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,15 +67,6 @@ public class AdminSetUpTimeSlotsActivity extends AppCompatActivity {
         findViews();
         bindViews();
         initialize();
-
-        SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
-        String dateString = "Dec 15, 2022";
-        try {
-            Date date = formatter.parse(dateString);
-            Log.i("INFO", date.toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     private void findViews() {
@@ -187,34 +176,18 @@ public class AdminSetUpTimeSlotsActivity extends AppCompatActivity {
         initializeDatePicker();
         initializeDatePickerInput();
         initializeButtons();
+        getServiceType();
+    }
+
+    private void getServiceType() {
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+
+        serviceType = extras.getInt("serviceType", -1);
     }
 
     private void initializeButtons() {
-        saveChangesButton.setOnClickListener(l -> {
-            if (!validateForm())
-                return;
-/*
-            // make slots:
-            List<TimeSlotDto> timeSlots = makeTimeSlots(
-                    maxCapacity,
-                    dateRange,
-                    slotLengthHours,
-                    slotLengthMinutes);
-
-            // proceed by saving slots to backend ...
-            TimeSlotsApiService apiService = new TimeSlotsApiService(this);
-            apiService.addTimeSlots(timeSlots, new VolleyCallback() {
-                @Override
-                public void onSuccess(String response) {
-
-                }
-
-                @Override
-                public void onError(VolleyError error) {
-
-                }
-            });*/
-        });
+        saveChangesButton.setOnClickListener(l -> saveChangesOnClick());
     }
 
     private List<TimeSlotDto> makeTimeSlots(
@@ -222,38 +195,82 @@ public class AdminSetUpTimeSlotsActivity extends AppCompatActivity {
             String dateRange,
             int slotLengthHours,
             int slotLengthMinutes) {
+        // get start date and end date:
+        Date[] dates = dateRangeToStartAndEndDates(dateRange);
+        Date startDate = dates[0];
+        Date endDate = dates[1];
+
+        // compute difference in milli seconds:
+        long diffInMillis = Math.abs(endDate.getTime() - startDate.getTime());
+        long slotLengthInMillis = slotLengthHours * 3600000L + slotLengthMinutes * 60000L;
+
+        // compute time slots count:
+        long timeSlotsCount = diffInMillis / slotLengthInMillis;
+
+        // create time slots:
+        SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy HH:mm");
         List<TimeSlotDto> timeSlots = new ArrayList<>();
 
-        TimeSlotDto timeSlotDto = new TimeSlotDto();
-        try {
-            LocalDateTime[] dates = dateRangeToStartAndEndDates(dateRange);
-            Log.e("INFO", "dates[0] = " + dates[0] + " dates[1] = " + dates[1]);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        for (int i = 0; i < timeSlotsCount; i++) {
+            TimeSlotDto newTimeSlotDto = new TimeSlotDto();
 
+            // set up new time slot dto:
+            newTimeSlotDto.currentCapacity = 0;
+            newTimeSlotDto.maximumCapacity = maximumCapacity;
+
+            // calculate start and end time of slot:
+            Date startTime = addTimeToDate(
+                    startDate,
+                    slotLengthHours * i,
+                    slotLengthMinutes * i);
+
+            Date endTime = addTimeToDate(
+                    startDate,
+                    slotLengthHours * (i + 1),
+                    slotLengthMinutes * (i + 1));
+
+            // format dates:
+            newTimeSlotDto.startTime = formatter.format(startTime);
+            newTimeSlotDto.endTime = formatter.format(endTime);
+
+            // add time slot to list:
+            timeSlots.add(newTimeSlotDto);
+        }
 
         return timeSlots;
     }
 
-    private static LocalDateTime[] dateRangeToStartAndEndDates (String dateRange) throws ParseException {
-        LocalDateTime[] dateTimes = new LocalDateTime[2];
-        Date[] dates = new Date[2];
+    private static Date addTimeToDate(Date x, int hours, int minutes) {
+        if (hours == 0 && minutes == 0)
+            return x;
 
-        String[] datesStrings = dateRange.split(" - ");
-        SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
-
-        for (int i = 0; i < 2; i++) {
-            dates[i] = formatter.parse(datesStrings[i]);
-            dateTimes[i] = dateToLocalDateTime(dates[i]);
-        }
-
-        return dateTimes;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(x);
+        calendar.add(Calendar.HOUR_OF_DAY, hours);
+        calendar.add(Calendar.MINUTE, minutes);
+        return calendar.getTime();
     }
 
-    private static LocalDateTime dateToLocalDateTime(Date x) {
-        Instant instant = x.toInstant();
-        return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+    private static Date[] dateRangeToStartAndEndDates(String dateRange) {
+        Date[] dates = new Date[2];
+
+        String[] datesStrings = dateRange.split(" – ");
+        SimpleDateFormat formatter1 = new SimpleDateFormat("MMM dd, yyyy");
+        SimpleDateFormat formatter2 = new SimpleDateFormat("MMM dd");
+
+        for (int i = 0; i < 2; i++) {
+            try {
+                dates[i] = formatter1.parse(datesStrings[i]);
+            } catch (ParseException e) {
+                try {
+                    dates[i] = formatter2.parse(datesStrings[i]);
+                } catch (ParseException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+
+        return dates;
     }
 
     private boolean validateForm() {
@@ -351,6 +368,38 @@ public class AdminSetUpTimeSlotsActivity extends AppCompatActivity {
 
         dateRangePicker.addOnPositiveButtonClickListener(l -> {
             dateRangeEditText.setText(dateRangePicker.getHeaderText());
+        });
+    }
+
+    private void saveChangesOnClick() {
+        if (!validateForm())
+            return;
+
+        // make slots:
+        List<TimeSlotDto> timeSlots = makeTimeSlots(
+                maxCapacity,
+                dateRange,
+                slotLengthHours,
+                slotLengthMinutes);
+
+        // proceed by saving slots to backend ...
+        TimeSlotsApiService apiService = new TimeSlotsApiService(this);
+        apiService.addTimeSlots(timeSlots, new VolleyCallback() {
+            @Override
+            public void onSuccess(String response) {
+                Toast.makeText(
+                        AdminSetUpTimeSlotsActivity.this,
+                        "Time Slots added successfully!",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                Toast.makeText(
+                        AdminSetUpTimeSlotsActivity.this,
+                        "Failed to save time slots: " + error.toString(),
+                        Toast.LENGTH_LONG).show();
+            }
         });
     }
 }

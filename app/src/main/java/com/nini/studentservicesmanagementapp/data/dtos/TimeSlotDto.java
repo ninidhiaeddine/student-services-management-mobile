@@ -1,11 +1,11 @@
 package com.nini.studentservicesmanagementapp.data.dtos;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class TimeSlotDto {
     public int serviceType;
-    public LocalDateTime startTime;
-    public LocalDateTime endTime;
+    public String startTime;
+    public String endTime;
     public int maximumCapacity;
     public int currentCapacity;
 }

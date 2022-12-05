@@ -1,6 +1,7 @@
 package com.nini.studentservicesmanagementapp.data.api;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -9,6 +10,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nini.studentservicesmanagementapp.data.dtos.TimeSlotDto;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -25,18 +27,35 @@ public class TimeSlotsApiService extends ApiService {
 
         try {
             String jsonBody = mapper.writeValueAsString(timeSlotDtoList);
+            Log.i("INFO", jsonBody);
 
-            StringRequest stringRequest = makePostStringRequest(URL, jsonBody, new VolleyCallback() {
+            StringRequest stringRequest = new StringRequest(
+                    Request.Method.POST,
+                    URL,
+                    response -> {
+                        callback.onSuccess(response);
+                    },
+                    error -> {
+                        callback.onError(error);
+                    }
+            ) {
                 @Override
-                public void onSuccess(String response) {
-                    callback.onSuccess(response);
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + getAuthorizationToken(context));
+                    return headers;
                 }
 
                 @Override
-                public void onError(VolleyError error) {
-                    callback.onError(error);
+                public String getBodyContentType() {
+                    return "application/json; charset=utf-8";
                 }
-            });
+
+                @Override
+                public byte[] getBody() {
+                    return jsonBody.getBytes(StandardCharsets.UTF_8);
+                }
+            };
 
             queue.add(stringRequest);
         } catch (JsonProcessingException e) {
@@ -110,7 +129,7 @@ public class TimeSlotsApiService extends ApiService {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Bearer " + getAuthorizationToken(context));
-                        return headers;
+                return headers;
             }
         };
 
