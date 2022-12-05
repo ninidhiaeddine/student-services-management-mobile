@@ -1,7 +1,6 @@
 package com.nini.studentservicesmanagementapp.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -9,18 +8,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.VolleyError;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.nini.studentservicesmanagementapp.data.models.Admin;
 import com.nini.studentservicesmanagementapp.shared.AdminSharedPrefsKeys;
 import com.nini.studentservicesmanagementapp.shared.FormValidator;
 import com.nini.studentservicesmanagementapp.R;
 import com.nini.studentservicesmanagementapp.data.api.AuthApiService;
 import com.nini.studentservicesmanagementapp.data.api.VolleyCallback;
 import com.nini.studentservicesmanagementapp.data.dtos.SignInDto;
-import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
 
 public class AdminLoginActivity extends AppCompatActivity implements FormValidator {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -32,16 +28,10 @@ public class AdminLoginActivity extends AppCompatActivity implements FormValidat
     private TextInputEditText emailInputEditText;
     private TextInputEditText passwordInputEditText;
 
-    // mapper:
-    private ObjectMapper mapper;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_login);
-
-        // initialize object mapper:
-        mapper = new ObjectMapper();
 
         findViews();
     }
@@ -70,13 +60,18 @@ public class AdminLoginActivity extends AppCompatActivity implements FormValidat
                 public void onSuccess(String response) {
                     // get token and store in shared prefs:
                     String token = response;
-                    storeAuthorizationTokenInSharedPrefs(token);
+                    AdminSharedPrefsKeys.storeAuthorizationTokenInSharedPrefs(
+                            AdminLoginActivity.this,
+                            token);
                     
                     // get current user data and store in shared prefs:
                     apiService.getCurrentAdmin(new VolleyCallback() {
                         @Override
                         public void onSuccess(String response) {
-                            storeAuthenticatedAdminInSharedPrefs(response);
+                            AdminSharedPrefsKeys.storeAuthenticatedAdminInSharedPrefs(
+                                    AdminLoginActivity.this,
+                                    response,
+                                    dto.password);
 
                             // create extras and put necessary info:
                             Bundle extras = new Bundle();
@@ -99,38 +94,6 @@ public class AdminLoginActivity extends AppCompatActivity implements FormValidat
                             Toast.makeText(AdminLoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
                         }
                     });
-                }
-
-                private void storeAuthenticatedAdminInSharedPrefs(String adminJson) {
-                    // convert admin json to admin object:
-                    Admin authenticatedAdmin;
-                    try {
-                        authenticatedAdmin = mapper.readValue(adminJson, Admin.class);
-                    } catch (JsonProcessingException e) {
-                        e.printStackTrace();
-                        return;
-                    }
-
-                    SharedPreferences prefs = getSharedPreferences(
-                            AdminSharedPrefsKeys.SHARED_PREFS,
-                            MODE_PRIVATE);
-                    SharedPreferences.Editor editor = prefs.edit();
-
-                    editor.putString(AdminSharedPrefsKeys.FIRST_NAME_KEY, authenticatedAdmin.firstName);
-                    editor.putString(AdminSharedPrefsKeys.LAST_NAME_KEY, authenticatedAdmin.lastName);
-                    editor.putString(AdminSharedPrefsKeys.EMAIL_KEY, authenticatedAdmin.email);
-                    editor.putString(AdminSharedPrefsKeys.PASSWORD_KEY, dto.password);
-
-                    editor.apply();
-                }
-
-                private void storeAuthorizationTokenInSharedPrefs(String token) {
-                    SharedPreferences prefs = getSharedPreferences(
-                            AdminSharedPrefsKeys.SHARED_PREFS,
-                            MODE_PRIVATE);
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString(AdminSharedPrefsKeys.AUTHORIZATION_TOKEN_KEY, token);
-                    editor.apply();
                 }
 
                 @Override

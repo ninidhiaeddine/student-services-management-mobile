@@ -32,16 +32,10 @@ public class StudentLoginActivity extends AppCompatActivity implements FormValid
     private TextInputEditText emailInputEditText;
     private TextInputEditText passwordInputEditText;
 
-    // mapper:
-    private ObjectMapper mapper;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_login);
-
-        // initialize object mapper:
-        mapper = new ObjectMapper();
 
         findViews();
     }
@@ -70,13 +64,18 @@ public class StudentLoginActivity extends AppCompatActivity implements FormValid
                 public void onSuccess(String response) {
                     // get token and store in shared prefs:
                     String token = response;
-                    storeAuthorizationTokenInSharedPrefs(token);
+                    StudentSharedPrefsKeys.storeAuthorizationTokenInSharedPrefs(
+                            StudentLoginActivity.this,
+                            token);
 
                     // get current user data and store in shared prefs:
                     apiService.getCurrentStudent(new VolleyCallback() {
                         @Override
                         public void onSuccess(String response) {
-                            storeAuthenticatedStudentInSharedPrefs(response);
+                            StudentSharedPrefsKeys.storeAuthenticatedStudentInSharedPrefs(
+                                    StudentLoginActivity.this,
+                                    response,
+                                    dto.password);
 
                             // create extras and put necessary info:
                             Bundle extras = new Bundle();
@@ -99,41 +98,6 @@ public class StudentLoginActivity extends AppCompatActivity implements FormValid
                             Toast.makeText(StudentLoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
                         }
                     });
-                }
-
-                private void storeAuthenticatedStudentInSharedPrefs(String studentJson) {
-                    // convert student json to student object:
-                    Student authenticatedStudent;
-                    try {
-                        authenticatedStudent = mapper.readValue(studentJson, Student.class);
-                    } catch (JsonProcessingException e) {
-                        e.printStackTrace();
-                        return;
-                    }
-
-                    SharedPreferences prefs = getSharedPreferences(
-                            StudentSharedPrefsKeys.SHARED_PREFS,
-                            MODE_PRIVATE);
-                    SharedPreferences.Editor editor = prefs.edit();
-
-                    editor.putString(StudentSharedPrefsKeys.FIRST_NAME_KEY, authenticatedStudent.firstName);
-                    editor.putString(StudentSharedPrefsKeys.LAST_NAME_KEY, authenticatedStudent.lastName);
-                    editor.putString(StudentSharedPrefsKeys.EMAIL_KEY, authenticatedStudent.email);
-                    editor.putString(StudentSharedPrefsKeys.PASSWORD_KEY, dto.password);
-                    editor.putInt(StudentSharedPrefsKeys.STUDENT_ID_KEY, authenticatedStudent.studentId);
-                    editor.putInt(StudentSharedPrefsKeys.GENDER_KEY, authenticatedStudent.gender);
-                    editor.putInt(StudentSharedPrefsKeys.IS_DORMS_KEY, authenticatedStudent.isDorms);
-
-                    editor.apply();
-                }
-
-                private void storeAuthorizationTokenInSharedPrefs(String token) {
-                    SharedPreferences prefs = getSharedPreferences(
-                            StudentSharedPrefsKeys.SHARED_PREFS,
-                            MODE_PRIVATE);
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString(StudentSharedPrefsKeys.AUTHORIZATION_TOKEN_KEY, token);
-                    editor.apply();
                 }
 
                 @Override

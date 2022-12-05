@@ -8,7 +8,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
+import com.android.volley.VolleyError;
 import com.nini.studentservicesmanagementapp.R;
+import com.nini.studentservicesmanagementapp.data.api.AuthApiService;
+import com.nini.studentservicesmanagementapp.data.api.VolleyCallback;
+import com.nini.studentservicesmanagementapp.data.dtos.SignInDto;
 import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
 import com.nini.studentservicesmanagementapp.shared.StudentSharedPrefsKeys;
 
@@ -71,6 +75,23 @@ public class MainActivity extends AppCompatActivity {
         if (email != null && password != null) {
             // student is logged in:
 
+            // refresh token:
+            SignInDto dto = new SignInDto();
+            dto.email = email;
+            dto.password = password;
+
+            AuthApiService apiService = new AuthApiService(this);
+            apiService.signInAdmin(dto, new VolleyCallback() {
+                @Override
+                public void onSuccess(String response) {
+                    String token = response;
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+
+                }
+            });
         }
     }
 
