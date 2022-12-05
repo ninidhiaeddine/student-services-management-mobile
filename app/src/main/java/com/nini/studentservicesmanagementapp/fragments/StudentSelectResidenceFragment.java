@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 
 import com.nini.studentservicesmanagementapp.R;
 import com.nini.studentservicesmanagementapp.activities.StudentBookingCalendarActivity;
@@ -19,6 +20,7 @@ import com.nini.studentservicesmanagementapp.shared.UserSharedPrefsKeys;
 public class StudentSelectResidenceFragment extends Fragment {
     private View view;
     private AutoCompleteTextView dropdownResidences;
+    private Button buttonProceed;
 
     private Intent intent;
 
@@ -44,6 +46,7 @@ public class StudentSelectResidenceFragment extends Fragment {
 
         this.intent = getActivity().getIntent();
         findViews();
+        setUpOnClickListener();
         // set up conditional view:
         setUpConditionalView();
 
@@ -52,6 +55,11 @@ public class StudentSelectResidenceFragment extends Fragment {
 
     private void findViews() {
         dropdownResidences = view.findViewById(R.id.dropdown_residences);
+        buttonProceed = view.findViewById(R.id.button_proceed);
+    }
+
+    private void setUpOnClickListener() {
+        buttonProceed.setOnClickListener(l -> proceedOnClick());
     }
 
     private void setUpConditionalView() {
@@ -72,7 +80,7 @@ public class StudentSelectResidenceFragment extends Fragment {
         dropdownResidences.setAdapter(adapter);
     }
 
-    public void proceedOnClick(View view) {
+    public void proceedOnClick() {
         Bundle extras = intent.getExtras();
 
         // put residence information inside bundle:

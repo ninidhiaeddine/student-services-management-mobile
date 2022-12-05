@@ -21,22 +21,6 @@ public class UserSharedPrefsKeys {
     public static final String GENDER_KEY = "gender_key";
     public static final String STUDENT_ID_KEY = "student_id_key";
 
-    public static Student getAuthenticatedStudent(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(
-                UserSharedPrefsKeys.SHARED_PREFS,
-                MODE_PRIVATE);
-
-        Student student = new Student();
-        student.firstName = prefs.getString(FIRST_NAME_KEY, null);
-        student.lastName = prefs.getString(LAST_NAME_KEY, null);
-        student.email = prefs.getString(EMAIL_KEY, null);
-        student.gender = prefs.getInt(GENDER_KEY, -1);
-        student.isDorms = prefs.getInt(IS_DORMS_KEY, -1);
-        student.studentId = prefs.getInt(STUDENT_ID_KEY, -1);
-
-        return student;
-    }
-
     public static void storeAuthenticatedStudentInSharedPrefs(
             Context context,
             String studentJson,
@@ -67,19 +51,6 @@ public class UserSharedPrefsKeys {
         editor.putInt(UserSharedPrefsKeys.IS_DORMS_KEY, authenticatedStudent.isDorms);
 
         editor.apply();
-    }
-
-    public static Admin getAuthenticatedAdmin(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(
-                UserSharedPrefsKeys.SHARED_PREFS,
-                Context.MODE_PRIVATE);
-
-        Admin admin = new Admin();
-        admin.firstName = prefs.getString(FIRST_NAME_KEY, null);
-        admin.lastName = prefs.getString(LAST_NAME_KEY, null);
-        admin.email = prefs.getString(EMAIL_KEY, null);
-
-        return admin;
     }
 
     public static void storeAuthenticatedAdminInSharedPrefs(
@@ -118,5 +89,34 @@ public class UserSharedPrefsKeys {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(UserSharedPrefsKeys.AUTHORIZATION_TOKEN_KEY, token);
         editor.apply();
+    }
+
+    public static Admin getAuthenticatedAdmin(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(
+                UserSharedPrefsKeys.SHARED_PREFS,
+                Context.MODE_PRIVATE);
+
+        Admin admin = new Admin();
+        admin.firstName = prefs.getString(FIRST_NAME_KEY, null);
+        admin.lastName = prefs.getString(LAST_NAME_KEY, null);
+        admin.email = prefs.getString(EMAIL_KEY, null);
+
+        return admin;
+    }
+
+    public static Student getAuthenticatedStudent(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(
+                UserSharedPrefsKeys.SHARED_PREFS,
+                MODE_PRIVATE);
+
+        Student student = new Student();
+        student.firstName = prefs.getString(FIRST_NAME_KEY, null);
+        student.lastName = prefs.getString(LAST_NAME_KEY, null);
+        student.email = prefs.getString(EMAIL_KEY, null);
+        student.gender = prefs.getInt(GENDER_KEY, -1);
+        student.isDorms = prefs.getInt(IS_DORMS_KEY, -1);
+        student.studentId = prefs.getInt(STUDENT_ID_KEY, -1);
+
+        return student;
     }
 }

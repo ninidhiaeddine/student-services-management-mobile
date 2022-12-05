@@ -34,7 +34,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/proceed"
-        android:onClick="proceedOnClick"
-        android:drawableEnd="@drawable/ic_arrow_right"/>
+        android:drawableEnd="@drawable/ic_arrow_right" />
 
 </LinearLayout>

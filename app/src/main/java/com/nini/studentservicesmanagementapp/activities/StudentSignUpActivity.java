@@ -2,13 +2,22 @@ package com.nini.studentservicesmanagementapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.nini.studentservicesmanagementapp.R;
+import com.nini.studentservicesmanagementapp.data.api.RegistrationApiService;
+import com.nini.studentservicesmanagementapp.data.api.VolleyCallback;
+import com.nini.studentservicesmanagementapp.data.dtos.AdminSignUpDto;
+import com.nini.studentservicesmanagementapp.data.dtos.SignInDto;
+import com.nini.studentservicesmanagementapp.data.dtos.StudentSignUpDto;
 
 public class StudentSignUpActivity extends AppCompatActivity {
     // views:
@@ -29,6 +38,7 @@ public class StudentSignUpActivity extends AppCompatActivity {
     private TextInputLayout genderDropdownLayout;
     private AutoCompleteTextView genderDropdown;
 
+    private SwitchMaterial dormsSwitch;
     private Button signUpButton;
 
     @Override
@@ -58,13 +68,56 @@ public class StudentSignUpActivity extends AppCompatActivity {
         genderDropdownLayout = findViewById(R.id.dropdown_layout_gender);
         genderDropdown = findViewById(R.id.dropdown_gender);
 
+        dormsSwitch = findViewById(R.id.switch_dorms);
         signUpButton = findViewById(R.id.button_sign_up_student);
     }
 
     private void signUpOnClick() {
         if (validateForm()) {
             // sign up logic goes here:
+
+            // create sign up dto:
+            StudentSignUpDto signUpDto = new StudentSignUpDto();
+            signUpDto.firstName = firstNameEditText.getText().toString();
+            signUpDto.lastName = lastNameEditText.getText().toString();
+            signUpDto.email = aubEmailEditText.getText().toString() + "mail.aub.edu";
+            signUpDto.password = passwordEditText.getText().toString();
+            signUpDto.gender = getGender(genderDropdown.getText().toString());
+            signUpDto.studentId = Integer.parseInt(idNumberEditText.getText().toString());
+            signUpDto.isDorms = dormsSwitch.isChecked() ? 1 : 0;
+
+            // make api call
+            signUpApi(this, signUpDto);
         }
+    }
+
+    private int getGender(String gender) {
+        if (gender.equals("Male")) return 0;
+        else if (gender.equals("Female")) return 1;
+        else return -1;
+    }
+
+    public static void signUpApi(Activity context, StudentSignUpDto signUpDto) {
+        RegistrationApiService apiService = new RegistrationApiService(context);
+        apiService.signUpStudent(signUpDto, new VolleyCallback() {
+            @Override
+            public void onSuccess(String response) {
+                // registration succeded
+                // now, proceed to login:
+
+                SignInDto dto = new SignInDto();
+                dto.email = signUpDto.email;
+                dto.password = signUpDto.password;
+
+                // login:
+                StudentLoginActivity.loginApi(context, dto);
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                Toast.makeText(context, "Something went wrong: " + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private boolean validateForm() {

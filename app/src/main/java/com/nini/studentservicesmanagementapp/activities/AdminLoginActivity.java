@@ -1,5 +1,6 @@
 package com.nini.studentservicesmanagementapp.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -53,60 +54,64 @@ public class AdminLoginActivity extends AppCompatActivity implements FormValidat
             dto.password = passwordInputEditText.getText().toString();
 
             // call api:
-            AuthApiService apiService = new AuthApiService(this);
-            apiService.signInAdmin(dto, new VolleyCallback() {
-                @Override
-                public void onSuccess(String response) {
-                    // get token and store in shared prefs:
-                    String token = response;
-                    UserSharedPrefsKeys.storeAuthorizationTokenInSharedPrefs(
-                            AdminLoginActivity.this,
-                            token);
-                    
-                    // get current user data and store in shared prefs:
-                    apiService.getCurrentAdmin(new VolleyCallback() {
-                        @Override
-                        public void onSuccess(String response) {
-                            UserSharedPrefsKeys.storeAuthenticatedAdminInSharedPrefs(
-                                    AdminLoginActivity.this,
-                                    response,
-                                    dto.password);
-
-                            // create extras and put necessary info:
-                            Bundle extras = new Bundle();
-                            extras.putInt("fragmentLayoutId", R.layout.fragment_admin_home);
-                            extras.putBoolean("isStudent", false);
-
-                            // prepare intent for new activity:
-                            Intent intent = new Intent(AdminLoginActivity.this, ProfileToolbarActivity.class);
-                            intent.putExtras(extras);
-
-                            // start activity:
-                            startActivity(intent);
-
-                            // kill login activity:
-                            finish();
-                        }
-
-                        @Override
-                        public void onError(VolleyError error) {
-                            Toast.makeText(AdminLoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-
-                @Override
-                public void onError(VolleyError error) {
-                    String errorMsg;
-                    if (error.networkResponse.statusCode == 404) {
-                        errorMsg = "Wrong Credentials";
-                    } else {
-                        errorMsg = error.toString();
-                    }
-                    Toast.makeText(AdminLoginActivity.this, errorMsg, Toast.LENGTH_LONG).show();
-                }
-            });
+            loginApi(this, dto);
         }
+    }
+
+    public static void loginApi(Activity context, SignInDto dto) {
+        AuthApiService apiService = new AuthApiService(context);
+        apiService.signInAdmin(dto, new VolleyCallback() {
+            @Override
+            public void onSuccess(String response) {
+                // get token and store in shared prefs:
+                String token = response;
+                UserSharedPrefsKeys.storeAuthorizationTokenInSharedPrefs(
+                        context,
+                        token);
+
+                // get current user data and store in shared prefs:
+                apiService.getCurrentAdmin(new VolleyCallback() {
+                    @Override
+                    public void onSuccess(String response) {
+                        UserSharedPrefsKeys.storeAuthenticatedAdminInSharedPrefs(
+                                context,
+                                response,
+                                dto.password);
+
+                        // create extras and put necessary info:
+                        Bundle extras = new Bundle();
+                        extras.putInt("fragmentLayoutId", R.layout.fragment_admin_home);
+                        extras.putBoolean("isStudent", false);
+
+                        // prepare intent for new activity:
+                        Intent intent = new Intent(context, ProfileToolbarActivity.class);
+                        intent.putExtras(extras);
+
+                        // start activity:
+                        context.startActivity(intent);
+
+                        // kill login activity:
+                        context.finish();
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) {
+                        Toast.makeText(context, error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                String errorMsg;
+                if (error.networkResponse.statusCode == 404) {
+                    errorMsg = "Wrong Credentials";
+                } else {
+                    errorMsg = error.toString();
+                }
+                Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public void signUpOnClick(View view) {

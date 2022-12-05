@@ -55,7 +55,7 @@ public class AuthApiService extends ApiService {
     }
 
     public void getCurrentAdmin(final VolleyCallback callback) {
-        final String ENDPOINT = "/auth/students/me";
+        final String ENDPOINT = "/auth/admins/me";
         final String URL = API_URL + ENDPOINT;
 
         StringRequest stringRequest = new StringRequest(
