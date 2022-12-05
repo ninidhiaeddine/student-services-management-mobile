@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.nini.studentservicesmanagementapp.data.models.Admin;
+import com.nini.studentservicesmanagementapp.shared.AdminSharedPrefsKeys;
 import com.nini.studentservicesmanagementapp.shared.FormValidator;
 import com.nini.studentservicesmanagementapp.R;
 import com.nini.studentservicesmanagementapp.data.api.AuthApiService;
@@ -110,24 +111,24 @@ public class AdminLoginActivity extends AppCompatActivity implements FormValidat
                     }
 
                     SharedPreferences prefs = getSharedPreferences(
-                            SharedPrefsKeys.SHARED_PREFS,
+                            AdminSharedPrefsKeys.SHARED_PREFS,
                             MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
 
-                    editor.putString(SharedPrefsKeys.FIRST_NAME_KEY, authenticatedAdmin.firstName);
-                    editor.putString(SharedPrefsKeys.LAST_NAME_KEY, authenticatedAdmin.lastName);
-                    editor.putString(SharedPrefsKeys.EMAIL_KEY, authenticatedAdmin.email);
-                    editor.putString(SharedPrefsKeys.PASSWORD_KEY, dto.password);
+                    editor.putString(AdminSharedPrefsKeys.FIRST_NAME_KEY, authenticatedAdmin.firstName);
+                    editor.putString(AdminSharedPrefsKeys.LAST_NAME_KEY, authenticatedAdmin.lastName);
+                    editor.putString(AdminSharedPrefsKeys.EMAIL_KEY, authenticatedAdmin.email);
+                    editor.putString(AdminSharedPrefsKeys.PASSWORD_KEY, dto.password);
 
                     editor.apply();
                 }
 
                 private void storeAuthorizationTokenInSharedPrefs(String token) {
                     SharedPreferences prefs = getSharedPreferences(
-                            SharedPrefsKeys.SHARED_PREFS,
+                            AdminSharedPrefsKeys.SHARED_PREFS,
                             MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString(SharedPrefsKeys.AUTHORIZATION_TOKEN_KEY, token);
+                    editor.putString(AdminSharedPrefsKeys.AUTHORIZATION_TOKEN_KEY, token);
                     editor.apply();
                 }
 

@@ -20,6 +20,7 @@ import com.nini.studentservicesmanagementapp.data.api.AuthApiService;
 import com.nini.studentservicesmanagementapp.data.api.VolleyCallback;
 import com.nini.studentservicesmanagementapp.data.dtos.SignInDto;
 import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
+import com.nini.studentservicesmanagementapp.shared.StudentSharedPrefsKeys;
 
 public class StudentLoginActivity extends AppCompatActivity implements FormValidator {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -111,27 +112,27 @@ public class StudentLoginActivity extends AppCompatActivity implements FormValid
                     }
 
                     SharedPreferences prefs = getSharedPreferences(
-                            SharedPrefsKeys.SHARED_PREFS,
+                            StudentSharedPrefsKeys.SHARED_PREFS,
                             MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
 
-                    editor.putString(SharedPrefsKeys.FIRST_NAME_KEY, authenticatedStudent.firstName);
-                    editor.putString(SharedPrefsKeys.LAST_NAME_KEY, authenticatedStudent.lastName);
-                    editor.putString(SharedPrefsKeys.EMAIL_KEY, authenticatedStudent.email);
-                    editor.putString(SharedPrefsKeys.PASSWORD_KEY, dto.password);
-                    editor.putInt(SharedPrefsKeys.STUDENT_ID_KEY, authenticatedStudent.studentId);
-                    editor.putInt(SharedPrefsKeys.GENDER_KEY, authenticatedStudent.gender);
-                    editor.putInt(SharedPrefsKeys.IS_DORMS_KEY, authenticatedStudent.isDorms);
+                    editor.putString(StudentSharedPrefsKeys.FIRST_NAME_KEY, authenticatedStudent.firstName);
+                    editor.putString(StudentSharedPrefsKeys.LAST_NAME_KEY, authenticatedStudent.lastName);
+                    editor.putString(StudentSharedPrefsKeys.EMAIL_KEY, authenticatedStudent.email);
+                    editor.putString(StudentSharedPrefsKeys.PASSWORD_KEY, dto.password);
+                    editor.putInt(StudentSharedPrefsKeys.STUDENT_ID_KEY, authenticatedStudent.studentId);
+                    editor.putInt(StudentSharedPrefsKeys.GENDER_KEY, authenticatedStudent.gender);
+                    editor.putInt(StudentSharedPrefsKeys.IS_DORMS_KEY, authenticatedStudent.isDorms);
 
                     editor.apply();
                 }
 
                 private void storeAuthorizationTokenInSharedPrefs(String token) {
                     SharedPreferences prefs = getSharedPreferences(
-                            SharedPrefsKeys.SHARED_PREFS,
+                            StudentSharedPrefsKeys.SHARED_PREFS,
                             MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString(SharedPrefsKeys.AUTHORIZATION_TOKEN_KEY, token);
+                    editor.putString(StudentSharedPrefsKeys.AUTHORIZATION_TOKEN_KEY, token);
                     editor.apply();
                 }
 
