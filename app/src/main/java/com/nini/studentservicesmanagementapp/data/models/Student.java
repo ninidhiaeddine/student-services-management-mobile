@@ -1,6 +1,6 @@
 package com.nini.studentservicesmanagementapp.data.models;
 
-public class Student implements Cloneable {
+public class Student {
     public int PK_Student;
     public String firstName;
     public String lastName;

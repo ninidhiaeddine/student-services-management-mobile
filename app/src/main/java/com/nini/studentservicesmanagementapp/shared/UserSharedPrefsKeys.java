@@ -4,6 +4,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,6 +33,7 @@ public class UserSharedPrefsKeys {
         Student authenticatedStudent;
         try {
             authenticatedStudent = mapper.readValue(studentJson, Student.class);
+            Log.w("INFO", "studentJson: " + studentJson);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return;

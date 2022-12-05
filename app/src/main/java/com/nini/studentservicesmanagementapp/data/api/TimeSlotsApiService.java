@@ -109,7 +109,7 @@ public class TimeSlotsApiService extends ApiService {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + authorizationToken);
+                headers.put("Authorization", "Bearer " + getAuthorizationToken(context));
                         return headers;
             }
         };

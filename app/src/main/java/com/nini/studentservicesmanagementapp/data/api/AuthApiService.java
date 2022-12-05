@@ -45,8 +45,8 @@ public class AuthApiService extends ApiService {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                Log.e("ERROR", "Authorization token : " +  authorizationToken);
-                headers.put("Authorization", "Bearer " + authorizationToken);
+                Log.e("ERROR", "Authorization token : " +  getAuthorizationToken(context));
+                headers.put("Authorization", "Bearer " + getAuthorizationToken(context));
                 return headers;
             }
         };
@@ -71,7 +71,7 @@ public class AuthApiService extends ApiService {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + authorizationToken);
+                headers.put("Authorization", "Bearer " + getAuthorizationToken(context));
                 return headers;
             }
         };

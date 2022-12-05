@@ -17,15 +17,15 @@ public class ApiService {
     protected final static String API_URL = "https://10.0.2.2:7093/api";
     protected final RequestQueue queue;
     protected final ObjectMapper mapper;
-    protected String authorizationToken;
+    protected final Context context;
 
     public ApiService(Context context) {
+        this.context = context;
         queue = Volley.newRequestQueue(context);
         mapper = new ObjectMapper();
-        authorizationToken = getAuthorizationToken(context);
     }
 
-    private String getAuthorizationToken(Context context) {
+    protected String getAuthorizationToken(Context context) {
         SharedPreferences prefs;
         prefs = context.getSharedPreferences(
                 UserSharedPrefsKeys.SHARED_PREFS,
