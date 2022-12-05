@@ -81,6 +81,7 @@ public class AdminLoginActivity extends AppCompatActivity implements FormValidat
                             // create extras and put necessary info:
                             Bundle extras = new Bundle();
                             extras.putInt("fragmentLayoutId", R.layout.fragment_admin_home);
+                            extras.putBoolean("isStudent", false);
 
                             // prepare intent for new activity:
                             Intent intent = new Intent(AdminLoginActivity.this, ProfileToolbarActivity.class);

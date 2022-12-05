@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.nini.studentservicesmanagementapp.R;
 import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
+import com.nini.studentservicesmanagementapp.shared.StudentSharedPrefsKeys;
 
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
@@ -27,11 +28,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // run first screen:
-        startFirstScreenIfFirstRun();
-
         // ssl handshake configuration:
         handleSSLHandshake();
+
+        // run first screen if first run:
+        startFirstScreenIfFirstRun();
+
+        // run profile activity if already loggied in:
+        startProfileActivityIfLoggedIn();
     }
 
     private void startFirstScreenIfFirstRun() {
@@ -53,6 +57,20 @@ public class MainActivity extends AppCompatActivity {
             // start activity:
             startActivity(intent);
             finish();
+        }
+    }
+
+    private void startProfileActivityIfLoggedIn() {
+        // 1. check if student is logged in:
+        SharedPreferences prefs = getSharedPreferences(
+                SharedPrefsKeys.SHARED_PREFS,
+                MODE_PRIVATE);
+        String email = prefs.getString(StudentSharedPrefsKeys.EMAIL_KEY, null);
+        String password = prefs.getString(StudentSharedPrefsKeys.PASSWORD_KEY, null);
+
+        if (email != null && password != null) {
+            // student is logged in:
+
         }
     }
 

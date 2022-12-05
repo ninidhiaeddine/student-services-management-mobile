@@ -15,13 +15,13 @@ public class AdminSharedPrefsKeys {
 
     public static Admin getAuthenticatedAdmin(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(
-                SharedPrefsKeys.SHARED_PREFS,
+                AdminSharedPrefsKeys.SHARED_PREFS,
                 Context.MODE_PRIVATE);
 
         Admin admin = new Admin();
-        admin.firstName = prefs.getString(FIRST_NAME_KEY, "N/A");
-        admin.lastName = prefs.getString(LAST_NAME_KEY, "N/A");
-        admin.email = prefs.getString(EMAIL_KEY, "N/A");
+        admin.firstName = prefs.getString(FIRST_NAME_KEY, null);
+        admin.lastName = prefs.getString(LAST_NAME_KEY, null);
+        admin.email = prefs.getString(EMAIL_KEY, null);
 
         return admin;
     }
