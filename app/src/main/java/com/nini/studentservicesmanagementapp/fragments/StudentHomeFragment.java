@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.nini.studentservicesmanagementapp.R;
 import com.nini.studentservicesmanagementapp.data.models.Student;
-import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
+import com.nini.studentservicesmanagementapp.shared.UserSharedPrefsKeys;
 
 public class StudentHomeFragment extends Fragment {
     private View view;
@@ -73,7 +73,7 @@ public class StudentHomeFragment extends Fragment {
     }
 
     private void setUpConditionalView() {
-        Student authenticatedStudent = SharedPrefsKeys.getAuthenticatedStudent(getActivity());
+        Student authenticatedStudent = UserSharedPrefsKeys.getAuthenticatedStudent(getActivity());
 
         // check whether student belongs to dorms:
         if (authenticatedStudent.isDorms == 0) {

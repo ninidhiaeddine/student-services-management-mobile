@@ -8,15 +8,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.VolleyError;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.nini.studentservicesmanagementapp.shared.AdminSharedPrefsKeys;
 import com.nini.studentservicesmanagementapp.shared.FormValidator;
 import com.nini.studentservicesmanagementapp.R;
 import com.nini.studentservicesmanagementapp.data.api.AuthApiService;
 import com.nini.studentservicesmanagementapp.data.api.VolleyCallback;
 import com.nini.studentservicesmanagementapp.data.dtos.SignInDto;
+import com.nini.studentservicesmanagementapp.shared.UserSharedPrefsKeys;
 
 public class AdminLoginActivity extends AppCompatActivity implements FormValidator {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -60,7 +59,7 @@ public class AdminLoginActivity extends AppCompatActivity implements FormValidat
                 public void onSuccess(String response) {
                     // get token and store in shared prefs:
                     String token = response;
-                    AdminSharedPrefsKeys.storeAuthorizationTokenInSharedPrefs(
+                    UserSharedPrefsKeys.storeAuthorizationTokenInSharedPrefs(
                             AdminLoginActivity.this,
                             token);
                     
@@ -68,7 +67,7 @@ public class AdminLoginActivity extends AppCompatActivity implements FormValidat
                     apiService.getCurrentAdmin(new VolleyCallback() {
                         @Override
                         public void onSuccess(String response) {
-                            AdminSharedPrefsKeys.storeAuthenticatedAdminInSharedPrefs(
+                            UserSharedPrefsKeys.storeAuthenticatedAdminInSharedPrefs(
                                     AdminLoginActivity.this,
                                     response,
                                     dto.password);

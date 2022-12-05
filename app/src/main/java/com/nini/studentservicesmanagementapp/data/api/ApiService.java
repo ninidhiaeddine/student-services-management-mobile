@@ -9,7 +9,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
+import com.nini.studentservicesmanagementapp.shared.UserSharedPrefsKeys;
 
 import java.nio.charset.StandardCharsets;
 
@@ -22,15 +22,16 @@ public class ApiService {
     public ApiService(Context context) {
         queue = Volley.newRequestQueue(context);
         mapper = new ObjectMapper();
-        getAuthorizationToken(context);
+        authorizationToken = getAuthorizationToken(context);
     }
 
-    private void getAuthorizationToken(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(
-                SharedPrefsKeys.SHARED_PREFS,
+    private String getAuthorizationToken(Context context) {
+        SharedPreferences prefs;
+        prefs = context.getSharedPreferences(
+                UserSharedPrefsKeys.SHARED_PREFS,
                 Context.MODE_PRIVATE
         );
-        prefs.getString(SharedPrefsKeys.AUTHORIZATION_TOKEN_KEY, "");
+        return prefs.getString(UserSharedPrefsKeys.AUTHORIZATION_TOKEN_KEY, "");
     }
 
     public static StringRequest makeGetStringRequest(String url, final VolleyCallback callback) {

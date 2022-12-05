@@ -14,7 +14,7 @@ import android.widget.AutoCompleteTextView;
 import com.nini.studentservicesmanagementapp.R;
 import com.nini.studentservicesmanagementapp.activities.StudentBookingCalendarActivity;
 import com.nini.studentservicesmanagementapp.data.models.Student;
-import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
+import com.nini.studentservicesmanagementapp.shared.UserSharedPrefsKeys;
 
 public class StudentSelectResidenceFragment extends Fragment {
     private View view;
@@ -55,7 +55,7 @@ public class StudentSelectResidenceFragment extends Fragment {
     }
 
     private void setUpConditionalView() {
-        Student authenticatedStudent = SharedPrefsKeys.getAuthenticatedStudent(getActivity());
+        Student authenticatedStudent = UserSharedPrefsKeys.getAuthenticatedStudent(getActivity());
 
         // check whether student is male or female:
         String[] residencesArray;

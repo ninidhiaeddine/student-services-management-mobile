@@ -1,6 +1,7 @@
 package com.nini.studentservicesmanagementapp.data.api;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -44,6 +45,7 @@ public class AuthApiService extends ApiService {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
+                Log.e("ERROR", "Authorization token : " +  authorizationToken);
                 headers.put("Authorization", "Bearer " + authorizationToken);
                 return headers;
             }

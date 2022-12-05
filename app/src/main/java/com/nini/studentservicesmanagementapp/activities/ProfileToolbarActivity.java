@@ -20,9 +20,7 @@ import com.nini.studentservicesmanagementapp.data.models.Student;
 import com.nini.studentservicesmanagementapp.fragments.AdminHomeFragment;
 import com.nini.studentservicesmanagementapp.fragments.StudentSelectResidenceFragment;
 import com.nini.studentservicesmanagementapp.fragments.StudentHomeFragment;
-import com.nini.studentservicesmanagementapp.shared.AdminSharedPrefsKeys;
-import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
-import com.nini.studentservicesmanagementapp.shared.StudentSharedPrefsKeys;
+import com.nini.studentservicesmanagementapp.shared.UserSharedPrefsKeys;
 
 public class ProfileToolbarActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -80,15 +78,15 @@ public class ProfileToolbarActivity extends AppCompatActivity {
     }
 
     private void populateUi() {
-        // get authenticated student info:
+        // get authenticated user info:
         if (isStudent()) {
-            Student authenticatedStudent = StudentSharedPrefsKeys.getAuthenticatedStudent(this);
+            Student authenticatedStudent = UserSharedPrefsKeys.getAuthenticatedStudent(this);
 
             // populate ui:
             toolbarText.setText(authenticatedStudent.getFullName());
             drawerText.setText(authenticatedStudent.getFullName());
         } else {
-            Admin authenticatedAdmin = AdminSharedPrefsKeys.getAuthenticatedAdmin(this);
+            Admin authenticatedAdmin = UserSharedPrefsKeys.getAuthenticatedAdmin(this);
 
             // populate ui:
             toolbarText.setText(authenticatedAdmin.getFullName());
@@ -121,18 +119,17 @@ public class ProfileToolbarActivity extends AppCompatActivity {
     }
 
     private void logOut() {
-        // find shared prefs key:
-        String sharedPrefsKey;
-        if (isStudent())
-            sharedPrefsKey = StudentSharedPrefsKeys.SHARED_PREFS;
-        else
-            sharedPrefsKey = AdminSharedPrefsKeys.SHARED_PREFS;
-
         // clear authenticated user shared preferences:
-        SharedPreferences prefs = getSharedPreferences(sharedPrefsKey, MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(
+                UserSharedPrefsKeys.SHARED_PREFS,
+                MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.clear();
         editor.apply();
+
+        // start main activity:
+        Intent intent = new Intent(ProfileToolbarActivity.this, MainActivity.class);
+        startActivity(intent);
 
         // kill activity:
         finish();
@@ -151,7 +148,7 @@ public class ProfileToolbarActivity extends AppCompatActivity {
                         .commit();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "Failed to retrieve Fragment Layout View",
+            Toast.makeText(this, "Failed to retrieve Fragment Layout View: " + e.toString(),
                     Toast.LENGTH_SHORT).show();
         }
     }

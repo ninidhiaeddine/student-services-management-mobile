@@ -8,6 +8,7 @@ public class Student implements Cloneable {
     public int studentId;
     public int gender;
     public int isDorms;
+    public String hashedPassword;
 
     public String getFullName() {
         return firstName + " " + lastName;

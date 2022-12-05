@@ -1,7 +1,6 @@
 package com.nini.studentservicesmanagementapp.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -9,18 +8,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.VolleyError;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.nini.studentservicesmanagementapp.data.models.Student;
 import com.nini.studentservicesmanagementapp.shared.FormValidator;
 import com.nini.studentservicesmanagementapp.R;
 import com.nini.studentservicesmanagementapp.data.api.AuthApiService;
 import com.nini.studentservicesmanagementapp.data.api.VolleyCallback;
 import com.nini.studentservicesmanagementapp.data.dtos.SignInDto;
-import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
-import com.nini.studentservicesmanagementapp.shared.StudentSharedPrefsKeys;
+import com.nini.studentservicesmanagementapp.shared.UserSharedPrefsKeys;
 
 public class StudentLoginActivity extends AppCompatActivity implements FormValidator {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -64,7 +59,7 @@ public class StudentLoginActivity extends AppCompatActivity implements FormValid
                 public void onSuccess(String response) {
                     // get token and store in shared prefs:
                     String token = response;
-                    StudentSharedPrefsKeys.storeAuthorizationTokenInSharedPrefs(
+                    UserSharedPrefsKeys.storeAuthorizationTokenInSharedPrefs(
                             StudentLoginActivity.this,
                             token);
 
@@ -72,7 +67,7 @@ public class StudentLoginActivity extends AppCompatActivity implements FormValid
                     apiService.getCurrentStudent(new VolleyCallback() {
                         @Override
                         public void onSuccess(String response) {
-                            StudentSharedPrefsKeys.storeAuthenticatedStudentInSharedPrefs(
+                            UserSharedPrefsKeys.storeAuthenticatedStudentInSharedPrefs(
                                     StudentLoginActivity.this,
                                     response,
                                     dto.password);
@@ -145,4 +140,5 @@ public class StudentLoginActivity extends AppCompatActivity implements FormValid
 
         return isValid;
     }
+
 }

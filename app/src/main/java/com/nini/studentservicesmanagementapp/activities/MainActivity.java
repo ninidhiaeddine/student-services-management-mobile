@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.nini.studentservicesmanagementapp.R;
@@ -14,7 +15,7 @@ import com.nini.studentservicesmanagementapp.data.api.AuthApiService;
 import com.nini.studentservicesmanagementapp.data.api.VolleyCallback;
 import com.nini.studentservicesmanagementapp.data.dtos.SignInDto;
 import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
-import com.nini.studentservicesmanagementapp.shared.StudentSharedPrefsKeys;
+import com.nini.studentservicesmanagementapp.shared.UserSharedPrefsKeys;
 
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         // run first screen if first run:
         startFirstScreenIfFirstRun();
 
-        // run profile activity if already loggied in:
+        // run profile activity if already logged in:
         startProfileActivityIfLoggedIn();
     }
 
@@ -65,15 +66,54 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startProfileActivityIfLoggedIn() {
-        // 1. check if student is logged in:
-        SharedPreferences prefs = getSharedPreferences(
-                SharedPrefsKeys.SHARED_PREFS,
-                MODE_PRIVATE);
-        String email = prefs.getString(StudentSharedPrefsKeys.EMAIL_KEY, null);
-        String password = prefs.getString(StudentSharedPrefsKeys.PASSWORD_KEY, null);
+        String email, password;
+        SharedPreferences prefs;
 
-        if (email != null && password != null) {
+        // 1. check if student is logged in:
+        prefs = getSharedPreferences(
+                UserSharedPrefsKeys.SHARED_PREFS,
+                MODE_PRIVATE);
+        email = prefs.getString(UserSharedPrefsKeys.EMAIL_KEY, null);
+        password = prefs.getString(UserSharedPrefsKeys.PASSWORD_KEY, null);
+        int studentId = prefs.getInt(UserSharedPrefsKeys.STUDENT_ID_KEY, -1);
+
+        if (email != null && password != null && studentId != -1) {
             // student is logged in:
+
+            // refresh token:
+            SignInDto dto = new SignInDto();
+            dto.email = email;
+            dto.password = password;
+
+            AuthApiService apiService = new AuthApiService(this);
+            apiService.signInStudent(dto, new VolleyCallback() {
+                @Override
+                public void onSuccess(String response) {
+                    // store new token:
+                    String token = response;
+                    UserSharedPrefsKeys.storeAuthorizationTokenInSharedPrefs(
+                            MainActivity.this,
+                            token);
+
+                    // start profile activity:
+                    Intent intent = new Intent(MainActivity.this, ProfileToolbarActivity.class);
+                    Bundle extras = new Bundle();
+                    extras.putInt("fragmentLayoutId", R.layout.fragment_student_home);
+                    extras.putBoolean("isStudent", true);
+                    intent.putExtras(extras);
+                    startActivity(intent);
+
+                    finish();
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                    return;
+                }
+            });
+        } else if (email != null && password != null) { // 2. check if admin is logged in:
+            // admin is logged in:
 
             // refresh token:
             SignInDto dto = new SignInDto();
@@ -84,12 +124,27 @@ public class MainActivity extends AppCompatActivity {
             apiService.signInAdmin(dto, new VolleyCallback() {
                 @Override
                 public void onSuccess(String response) {
+                    // store new token:
                     String token = response;
+                    UserSharedPrefsKeys.storeAuthorizationTokenInSharedPrefs(
+                            MainActivity.this,
+                            token);
+
+                    // start profile activity:
+                    Intent intent = new Intent(MainActivity.this, ProfileToolbarActivity.class);
+                    Bundle extras = new Bundle();
+                    extras.putBoolean("isStudent", false);
+                    extras.putInt("fragmentLayoutId", R.layout.fragment_admin_home);
+                    intent.putExtras(extras);
+                    startActivity(intent);
+
+                    finish();
                 }
 
                 @Override
                 public void onError(VolleyError error) {
-
+                    Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                    return;
                 }
             });
         }
