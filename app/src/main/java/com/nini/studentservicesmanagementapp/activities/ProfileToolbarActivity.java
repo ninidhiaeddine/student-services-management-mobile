@@ -18,8 +18,8 @@ import com.nini.studentservicesmanagementapp.R;
 import com.nini.studentservicesmanagementapp.data.models.Admin;
 import com.nini.studentservicesmanagementapp.data.models.Student;
 import com.nini.studentservicesmanagementapp.fragments.AdminHomeFragment;
-import com.nini.studentservicesmanagementapp.fragments.StudentSelectResidenceFragment;
 import com.nini.studentservicesmanagementapp.fragments.StudentHomeFragment;
+import com.nini.studentservicesmanagementapp.fragments.StudentSelectResidenceFragment;
 import com.nini.studentservicesmanagementapp.shared.UserSharedPrefsKeys;
 
 public class ProfileToolbarActivity extends AppCompatActivity {
@@ -156,7 +156,7 @@ public class ProfileToolbarActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     private Class determineFragment(int fragmentLayoutId) throws Exception {
         switch (fragmentLayoutId) {
-            case R.layout.fragment_student_select_residence:
+            case R.layout.fragment_select_residence:
                 return StudentSelectResidenceFragment.class;
             case R.layout.fragment_student_home:
                 return StudentHomeFragment.class;

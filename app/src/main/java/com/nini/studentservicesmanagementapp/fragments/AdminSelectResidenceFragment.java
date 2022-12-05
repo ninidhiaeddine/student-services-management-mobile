@@ -12,16 +12,23 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 
 import com.nini.studentservicesmanagementapp.R;
-import com.nini.studentservicesmanagementapp.activities.StudentBookingCalendarActivity;
-import com.nini.studentservicesmanagementapp.data.models.Student;
-import com.nini.studentservicesmanagementapp.shared.UserSharedPrefsKeys;
+import com.nini.studentservicesmanagementapp.activities.AdminSetUpTimeSlotsActivity;
+import com.nini.studentservicesmanagementapp.activities.AdminViewReservationDetailsActivity;
 
-public class StudentSelectResidenceFragment extends Fragment {
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.stream.Stream;
+
+public class AdminSelectResidenceFragment extends Fragment {
     private View view;
     private AutoCompleteTextView dropdownResidences;
     private Button buttonProceed;
 
     private Intent intent;
+
+    public AdminSelectResidenceFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,10 +43,9 @@ public class StudentSelectResidenceFragment extends Fragment {
 
         intent = getActivity().getIntent();
 
-        // set up conditional view:
         findViews();
         setUpOnClickListener();
-        setUpConditionalView();
+        setUpDropDown();
 
         return view;
     }
@@ -53,22 +59,21 @@ public class StudentSelectResidenceFragment extends Fragment {
         buttonProceed.setOnClickListener(l -> proceedOnClick());
     }
 
-    private void setUpConditionalView() {
-        Student authenticatedStudent = UserSharedPrefsKeys.getAuthenticatedStudent(getActivity());
+    private void setUpDropDown() {
+        String[] maleResidences = getResources().getStringArray(R.array.male_residences_array);
+        String[] femaleResidences = getResources().getStringArray(R.array.female_residences_array);
+        String[] residencesArray = concatenateArrays(maleResidences, femaleResidences);
 
-        // check whether student is male or female:
-        String[] residencesArray;
-        if (authenticatedStudent.gender == 0) {
-            residencesArray = getResources().getStringArray(R.array.male_residences_array);
-        } else {
-            residencesArray = getResources().getStringArray(R.array.female_residences_array);
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getActivity(),
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
                 residencesArray);
         dropdownResidences.setAdapter(adapter);
+    }
+
+    private static String[] concatenateArrays(String[] arr1, String[] arr2) {
+        return Stream.concat(Arrays.stream(arr1), Arrays.stream(arr2))
+                .toArray(size ->  (String[]) Array.newInstance(arr1.getClass().getComponentType(), size));
     }
 
     private void proceedOnClick() {
@@ -79,7 +84,14 @@ public class StudentSelectResidenceFragment extends Fragment {
         extras.putString("residenceName", selectedResidenceName);
 
         // prepare intent:
-        Intent intent = new Intent(getActivity(), StudentBookingCalendarActivity.class);
+        Intent intent;
+        if (extras.getInt("action") == 0) {
+            intent = new Intent(getActivity(), AdminViewReservationDetailsActivity.class);
+        } else if (extras.getInt("action") == 1) {
+            intent = new Intent(getActivity(), AdminSetUpTimeSlotsActivity.class);
+        } else {
+            return;
+        }
         intent.putExtras(extras);
 
         // start activity:
