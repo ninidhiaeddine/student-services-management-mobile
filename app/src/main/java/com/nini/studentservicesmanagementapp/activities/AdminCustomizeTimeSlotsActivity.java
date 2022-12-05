@@ -1,9 +1,11 @@
-package com.nini.studentservicesmanagementapp;
+package com.nini.studentservicesmanagementapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.CalendarView;
+
+import com.nini.studentservicesmanagementapp.R;
 
 import java.util.Date;
 

@@ -13,51 +13,52 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StudentServicesManagementApp"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        android:usesCleartextTraffic="true">
         <activity
-            android:name=".AdminBookingsCalendarActivity"
+            android:name=".activities.AdminBookingsCalendarActivity"
             android:exported="true" />
         <activity
-            android:name=".AdminCustomizeTimeSlotsActivity"
+            android:name=".activities.AdminCustomizeTimeSlotsActivity"
             android:exported="true" />
         <activity
-            android:name=".AdminLoginActivity"
+            android:name=".activities.AdminLoginActivity"
             android:exported="true" />
         <activity
-            android:name=".AdminScanQrCodeActivity"
+            android:name=".activities.AdminScanQrCodeActivity"
             android:exported="true" />
         <activity
-            android:name=".AdminSetUpTimeSlotsActivity"
+            android:name=".activities.AdminSetUpTimeSlotsActivity"
             android:exported="true" />
         <activity
-            android:name=".AdminSignUpActivity"
+            android:name=".activities.AdminSignUpActivity"
             android:exported="true" />
         <activity
-            android:name=".AdminViewReservationDetailsActivity"
+            android:name=".activities.AdminViewReservationDetailsActivity"
             android:exported="true" />
         <activity
-            android:name=".FirstScreenActivity"
+            android:name=".activities.FirstScreenActivity"
             android:exported="true" />
         <activity
-            android:name=".ProfileToolbarActivity"
+            android:name=".activities.ProfileToolbarActivity"
             android:exported="true" />
         <activity
-            android:name=".StudentBookingCalendarActivity"
+            android:name=".activities.StudentBookingCalendarActivity"
             android:exported="true" />
         <activity
-            android:name=".StudentBookingDetailsActivity"
+            android:name=".activities.StudentBookingDetailsActivity"
             android:exported="true" />
         <activity
-            android:name=".StudentViewReservationsActivity"
+            android:name=".activities.StudentViewReservationsActivity"
             android:exported="true" />
         <activity
-            android:name=".StudentSignUpActivity"
+            android:name=".activities.StudentSignUpActivity"
             android:exported="true" />
         <activity
-            android:name=".StudentLoginActivity"
+            android:name=".activities.StudentLoginActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

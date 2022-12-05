@@ -9,7 +9,7 @@
     android:layout_gravity="center"
     android:layout_marginStart="32dp"
     android:layout_marginEnd="32dp"
-    tools:context=".StudentSelectResidenceFragment">
+    tools:context=".fragments.StudentSelectResidenceFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/dropdown_menu"
@@ -20,10 +20,10 @@
         android:layout_marginTop="32dp">
 
         <AutoCompleteTextView
+            android:id="@+id/dropdown_residences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
-            app:simpleItems="@array/male_residences_array"
             tools:ignore="LabelFor" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -34,6 +34,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/proceed"
-        android:drawableEnd="@drawable/ic_arrow_right"/>
+        android:drawableEnd="@drawable/ic_arrow_right" />
 
 </LinearLayout>

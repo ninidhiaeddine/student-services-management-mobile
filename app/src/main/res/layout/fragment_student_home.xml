@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".StudentServicesFragment">
+    tools:context=".fragments.StudentHomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         tools:ignore="UselessParent">
 
         <TextView
-            android:id="@+id/textViewServices1"
+            android:id="@+id/text_dorms_services"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -25,7 +25,7 @@
             android:textStyle="bold" />
 
         <LinearLayout
-            android:id="@+id/linearLayout1"
+            android:id="@+id/layout_dorms_services"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -54,7 +54,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textViewServices2"
+            android:id="@+id/text_charles_services"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -65,7 +65,7 @@
             android:textStyle="bold" />
 
         <LinearLayout
-            android:id="@+id/linearLayout2"
+            android:id="@+id/layout_charles_services"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

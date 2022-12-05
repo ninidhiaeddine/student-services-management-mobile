@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstScreenActivity">
+    tools:context=".activities.FirstScreenActivity">
 
     <ImageView
         android:id="@+id/imageViewLogo"
@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/image_logo"
+        android:src="@drawable/image_logo"
         android:contentDescription="@string/app_logo" />
 
     <TextView
@@ -50,6 +50,7 @@
         android:layout_marginEnd="64dp"
         android:layout_marginTop="64dp"
         android:text="@string/get_started"
+        android:onClick="getStartedOnClick"
         android:drawableEnd="@drawable/ic_arrow_right"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

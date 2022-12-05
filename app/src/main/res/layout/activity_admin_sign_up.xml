@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".AdminSignUpActivity"
+    tools:context=".activities.AdminSignUpActivity"
     android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,7 +42,7 @@
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_first_name_a"
+                    android:id="@+id/edit_first_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/first_name"
@@ -59,7 +59,7 @@
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_last_name_a"
+                    android:id="@+id/edit_last_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/last_name"
@@ -75,10 +75,10 @@
                 android:layout_marginTop="8dp"
                 app:endIconDrawable="@drawable/ic_baseline_email_24"
                 app:endIconMode="custom"
-                app:suffixText="\@mail.aub.edu">
+                app:suffixText="\@aub.edu.lb">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_aub_email_a"
+                    android:id="@+id/edit_aub_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/aub_email"
@@ -94,7 +94,7 @@
                 app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_password_a"
+                    android:id="@+id/edit_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
@@ -110,7 +110,7 @@
                 app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_confirm_password_a"
+                    android:id="@+id/edit_confirm_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/confirm_password"
