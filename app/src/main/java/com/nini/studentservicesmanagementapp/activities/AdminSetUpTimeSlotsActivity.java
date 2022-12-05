@@ -7,16 +7,31 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.Button;
 
+import com.android.volley.VolleyError;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.nini.studentservicesmanagementapp.R;
+import com.nini.studentservicesmanagementapp.data.api.TimeSlotsApiService;
+import com.nini.studentservicesmanagementapp.data.api.VolleyCallback;
+import com.nini.studentservicesmanagementapp.data.dtos.TimeSlotDto;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 public class AdminSetUpTimeSlotsActivity extends AppCompatActivity {
@@ -54,6 +69,15 @@ public class AdminSetUpTimeSlotsActivity extends AppCompatActivity {
         findViews();
         bindViews();
         initialize();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+        String dateString = "Dec 15, 2022";
+        try {
+            Date date = formatter.parse(dateString);
+            Log.i("INFO", date.toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     private void findViews() {
@@ -169,9 +193,67 @@ public class AdminSetUpTimeSlotsActivity extends AppCompatActivity {
         saveChangesButton.setOnClickListener(l -> {
             if (!validateForm())
                 return;
+/*
+            // make slots:
+            List<TimeSlotDto> timeSlots = makeTimeSlots(
+                    maxCapacity,
+                    dateRange,
+                    slotLengthHours,
+                    slotLengthMinutes);
 
-            // proceed by saving to backend ...
+            // proceed by saving slots to backend ...
+            TimeSlotsApiService apiService = new TimeSlotsApiService(this);
+            apiService.addTimeSlots(timeSlots, new VolleyCallback() {
+                @Override
+                public void onSuccess(String response) {
+
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+
+                }
+            });*/
         });
+    }
+
+    private List<TimeSlotDto> makeTimeSlots(
+            int maximumCapacity,
+            String dateRange,
+            int slotLengthHours,
+            int slotLengthMinutes) {
+        List<TimeSlotDto> timeSlots = new ArrayList<>();
+
+        TimeSlotDto timeSlotDto = new TimeSlotDto();
+        try {
+            LocalDateTime[] dates = dateRangeToStartAndEndDates(dateRange);
+            Log.e("INFO", "dates[0] = " + dates[0] + " dates[1] = " + dates[1]);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        return timeSlots;
+    }
+
+    private static LocalDateTime[] dateRangeToStartAndEndDates (String dateRange) throws ParseException {
+        LocalDateTime[] dateTimes = new LocalDateTime[2];
+        Date[] dates = new Date[2];
+
+        String[] datesStrings = dateRange.split(" - ");
+        SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+
+        for (int i = 0; i < 2; i++) {
+            dates[i] = formatter.parse(datesStrings[i]);
+            dateTimes[i] = dateToLocalDateTime(dates[i]);
+        }
+
+        return dateTimes;
+    }
+
+    private static LocalDateTime dateToLocalDateTime(Date x) {
+        Instant instant = x.toInstant();
+        return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
     }
 
     private boolean validateForm() {
