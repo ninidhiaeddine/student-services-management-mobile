@@ -42,7 +42,7 @@ public class StudentBookingCalendarActivity extends AppCompatActivity {
     private TimeSlotsAdapter adapter;
 
     // time slots set:
-    private List<TimeSlot> timeSlotsSet = new ArrayList<>();
+    private final List<TimeSlot> timeSlotsSet = new ArrayList<>();
 
     // dates:
     private Date selectedDate;
@@ -87,7 +87,7 @@ public class StudentBookingCalendarActivity extends AppCompatActivity {
     }
 
     private void setUpRecyclerView() {
-        adapter = new TimeSlotsAdapter(timeSlotsSet);
+        adapter = new TimeSlotsAdapter(this, timeSlotsSet);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(StudentBookingCalendarActivity.this));
     }

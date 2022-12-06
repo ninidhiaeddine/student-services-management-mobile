@@ -2,7 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:padding="8dp"
     android:background="@drawable/time_slot_background">
 
     <TableLayout
@@ -33,7 +36,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="8dp"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:text="@string/n_a"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -63,7 +66,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="8dp"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:text="@string/n_a"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -93,7 +96,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="8dp"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:text="@string/n_a"
                 android:textSize="20sp"
                 android:textStyle="bold" />
