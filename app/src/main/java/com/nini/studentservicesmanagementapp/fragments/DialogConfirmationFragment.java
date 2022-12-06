@@ -1,7 +1,10 @@
 package com.nini.studentservicesmanagementapp.fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,11 +12,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.android.volley.VolleyError;
 import com.nini.studentservicesmanagementapp.R;
+import com.nini.studentservicesmanagementapp.activities.StudentBookingCalendarActivity;
+import com.nini.studentservicesmanagementapp.activities.StudentBookingDetailsActivity;
 import com.nini.studentservicesmanagementapp.data.api.RegistrationApiService;
 import com.nini.studentservicesmanagementapp.data.api.ReservationsApiService;
 import com.nini.studentservicesmanagementapp.data.api.VolleyCallback;
@@ -23,13 +29,21 @@ import com.nini.studentservicesmanagementapp.data.models.TimeSlot;
 import com.nini.studentservicesmanagementapp.shared.UserSharedPrefsKeys;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DialogConfirmationFragment extends DialogFragment {
-    private TimeSlot timeSlotData;
+    private final TimeSlot timeSlotData;
+    private Activity activity;
 
     public DialogConfirmationFragment(TimeSlot timeSlotData) {
         super();
         this.timeSlotData = timeSlotData;
+    }
+
+    @Override
+    public void onAttach(@NonNull Activity activity) {
+        super.onAttach(activity);
+        this.activity = activity;
     }
 
     @Override
@@ -64,20 +78,23 @@ public class DialogConfirmationFragment extends DialogFragment {
                         apiService.addReservation(reservationDto, new VolleyCallback() {
                             @Override
                             public void onSuccess(String response) {
-                                Toast.makeText(
-                                        getContext(),
-                                        "Booked successfully!",
-                                        Toast.LENGTH_SHORT)
-                                        .show();
+                                // if it succeeds, start activity that shows booking details:
+                                Intent oldIntent = activity.getIntent();
+                                Bundle extras = oldIntent.getExtras();
+
+                                extras.putString("startTimeString", extractTimeString(timeSlotData.startTime));
+                                extras.putString("endTimeString", extractTimeString(timeSlotData.endTime));
+                                extras.putString("dateString", extractDateString(timeSlotData.startTime));
+
+                                Intent intent = new Intent(activity, StudentBookingDetailsActivity.class);
+                                intent.putExtras(extras);
+
+                                // start activity:
+                                activity.startActivity(intent);
                             }
 
                             @Override
                             public void onError(VolleyError error) {
-                                /*Toast.makeText(
-                                        getContext(),
-                                        "Something went wrong: " + error.toString(),
-                                        Toast.LENGTH_LONG)
-                                        .show();*/
                                 Log.e("ERROR", error.toString());
                             }
                         });
@@ -97,18 +114,24 @@ public class DialogConfirmationFragment extends DialogFragment {
         TextView textStartTimeValue = view.findViewById(R.id.text_start_time_value);
         TextView textEndTimeValue = view.findViewById(R.id.text_end_time_value);
 
-        // create formatters:
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd MMM, yyyy");
-        SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm a");
-
         // format dates and times:
-        String dateString = dateFormatter.format(timeSlotData.startTime);
-        String startTimeString = timeFormatter.format(timeSlotData.startTime);
-        String endTimeString = timeFormatter.format(timeSlotData.endTime);
+        String dateString = extractDateString(timeSlotData.startTime);
+        String startTimeString = extractTimeString(timeSlotData.startTime);
+        String endTimeString = extractTimeString(timeSlotData.endTime);
 
         // set values:
         textDateValue.setText(dateString);
         textStartTimeValue.setText(startTimeString);
         textEndTimeValue.setText(endTimeString);
+    }
+
+    private static String extractDateString(Date x) {
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd MMM, yyyy");
+        return dateFormatter.format(x);
+    }
+
+    private static String extractTimeString(Date x) {
+        SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm a");
+        return timeFormatter.format(x);
     }
 }

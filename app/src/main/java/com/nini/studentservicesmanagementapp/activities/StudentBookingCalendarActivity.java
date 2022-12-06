@@ -124,7 +124,6 @@ public class StudentBookingCalendarActivity extends AppCompatActivity {
                         try {
                             timeSlotsSet.addAll(Arrays.asList(mapper.readValue(response, TimeSlot[].class)));
 
-                            Log.i("INFO", "Count = " + adapter.getItemCount());
                             adapter.notifyDataSetChanged();
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
@@ -144,7 +143,7 @@ public class StudentBookingCalendarActivity extends AppCompatActivity {
                         else
                             errorMsg = "Failed to retrieve time slots: " + error;
 
-                        Toast.makeText(StudentBookingCalendarActivity.this, errorMsg, Toast.LENGTH_LONG).show();
+                        Toast.makeText(StudentBookingCalendarActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
