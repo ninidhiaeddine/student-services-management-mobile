@@ -26,24 +26,26 @@ public class RegistrationApiService extends ApiService {
     private <T> void signUp(String endpoint, T signUpDto, final VolleyCallback callback) {
         final String URL = API_URL + endpoint;
 
+        String jsonBody;
         try {
-            String jsonBody = mapper.writeValueAsString(signUpDto);
-
-            StringRequest stringRequest = makePostStringRequest(URL, jsonBody, new VolleyCallback() {
-                @Override
-                public void onSuccess(String response) {
-                    callback.onSuccess(response);
-                }
-
-                @Override
-                public void onError(VolleyError error) {
-                    callback.onError(error);
-                }
-            });
-
-            queue.add(stringRequest);
+            jsonBody = mapper.writeValueAsString(signUpDto);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
+            return;
         }
+
+        StringRequest stringRequest = makePostStringRequest(URL, jsonBody, new VolleyCallback() {
+            @Override
+            public void onSuccess(String response) {
+                callback.onSuccess(response);
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                callback.onError(error);
+            }
+        });
+
+        queue.add(stringRequest);
     }
 }

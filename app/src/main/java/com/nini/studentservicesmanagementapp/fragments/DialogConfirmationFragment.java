@@ -3,15 +3,24 @@ package com.nini.studentservicesmanagementapp.fragments;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import com.android.volley.VolleyError;
 import com.nini.studentservicesmanagementapp.R;
+import com.nini.studentservicesmanagementapp.data.api.RegistrationApiService;
+import com.nini.studentservicesmanagementapp.data.api.ReservationsApiService;
+import com.nini.studentservicesmanagementapp.data.api.VolleyCallback;
+import com.nini.studentservicesmanagementapp.data.dtos.ReservationDto;
+import com.nini.studentservicesmanagementapp.data.models.Student;
 import com.nini.studentservicesmanagementapp.data.models.TimeSlot;
+import com.nini.studentservicesmanagementapp.shared.UserSharedPrefsKeys;
 
 import java.text.SimpleDateFormat;
 
@@ -43,6 +52,35 @@ public class DialogConfirmationFragment extends DialogFragment {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // booking logic goes here: ...
+
+                        // make reservation dto:
+                        Student authenticatedStudent = UserSharedPrefsKeys.getAuthenticatedStudent(getActivity());
+                        ReservationDto reservationDto = new ReservationDto();
+                        reservationDto.studentId = authenticatedStudent.PK_Student;
+                        reservationDto.timeSlotId = timeSlotData.PK_TimeSlot;
+
+                        // make api call
+                        ReservationsApiService apiService = new ReservationsApiService(getContext());
+                        apiService.addReservation(reservationDto, new VolleyCallback() {
+                            @Override
+                            public void onSuccess(String response) {
+                                Toast.makeText(
+                                        getContext(),
+                                        "Booked successfully!",
+                                        Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+
+                            @Override
+                            public void onError(VolleyError error) {
+                                /*Toast.makeText(
+                                        getContext(),
+                                        "Something went wrong: " + error.toString(),
+                                        Toast.LENGTH_LONG)
+                                        .show();*/
+                                Log.e("ERROR", error.toString());
+                            }
+                        });
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

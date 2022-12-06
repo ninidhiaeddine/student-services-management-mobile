@@ -14,6 +14,7 @@ import com.nini.studentservicesmanagementapp.data.models.Student;
 public class UserSharedPrefsKeys {
     public static final String SHARED_PREFS = "user_shared_prefs";
     public static final String AUTHORIZATION_TOKEN_KEY = "authorization_token_key";
+    public static final String PK_KEY = "pk_key";
     public static final String EMAIL_KEY = "email_key";
     public static final String PASSWORD_KEY = "password_key";
     public static final String FIRST_NAME_KEY = "first_name_key";
@@ -44,6 +45,7 @@ public class UserSharedPrefsKeys {
                 MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
+        editor.putInt(UserSharedPrefsKeys.PK_KEY, authenticatedStudent.PK_Student);
         editor.putString(UserSharedPrefsKeys.FIRST_NAME_KEY, authenticatedStudent.firstName);
         editor.putString(UserSharedPrefsKeys.LAST_NAME_KEY, authenticatedStudent.lastName);
         editor.putString(UserSharedPrefsKeys.EMAIL_KEY, authenticatedStudent.email);
@@ -76,6 +78,7 @@ public class UserSharedPrefsKeys {
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
+        editor.putInt(UserSharedPrefsKeys.PK_KEY, authenticatedAdmin.PK_Admin);
         editor.putString(UserSharedPrefsKeys.FIRST_NAME_KEY, authenticatedAdmin.firstName);
         editor.putString(UserSharedPrefsKeys.LAST_NAME_KEY, authenticatedAdmin.lastName);
         editor.putString(UserSharedPrefsKeys.EMAIL_KEY, authenticatedAdmin.email);
@@ -99,6 +102,7 @@ public class UserSharedPrefsKeys {
                 Context.MODE_PRIVATE);
 
         Admin admin = new Admin();
+        admin.PK_Admin = prefs.getInt(PK_KEY, -1);
         admin.firstName = prefs.getString(FIRST_NAME_KEY, null);
         admin.lastName = prefs.getString(LAST_NAME_KEY, null);
         admin.email = prefs.getString(EMAIL_KEY, null);
@@ -112,6 +116,7 @@ public class UserSharedPrefsKeys {
                 MODE_PRIVATE);
 
         Student student = new Student();
+        student.PK_Student = prefs.getInt(PK_KEY, -1);
         student.firstName = prefs.getString(FIRST_NAME_KEY, null);
         student.lastName = prefs.getString(LAST_NAME_KEY, null);
         student.email = prefs.getString(EMAIL_KEY, null);
