@@ -63,6 +63,10 @@
     <string name="i_am_a">I am a</string>
     <string name="student">Student</string>
     <string name="admin">Admin</string>
+    <string name="yes">Yes!</string>
+    <string name="cancel">Cancel</string>
+    <string name="booking_confirmation">Booking Confirmation</string>
+    <string name="do_you_want_to_confirm">Do you want to confirm your reservation?</string>
 
     <string-array name="male_residences_array">
         <item>Kerr I Hall</item>
@@ -87,4 +91,6 @@
     <string name="scan_qr_code">Scan QR Code</string>
     <string name="set_up_time_slots">Set Up Time Slots</string>
     <string name="manage_reservations">Manage Reservations</string>
+    <string name="end_time">End Time</string>
+    <string name="start_time">Start Time</string>
 </resources>

@@ -1,13 +1,13 @@
 package com.nini.studentservicesmanagementapp.data.models;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class TimeSlot
 {
     public int PK_TimeSlot;
     public int serviceType;
-    public LocalDateTime startTime;
-    public LocalDateTime endTime;
+    public Date startTime;
+    public Date endTime;
     public int maximumCapacity;
     public int currentCapacity;
 }
