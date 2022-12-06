@@ -1,7 +1,6 @@
 package com.nini.studentservicesmanagementapp.shared;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,32 +18,15 @@ import java.util.List;
 public class TimeSlotsAdapter extends RecyclerView.Adapter<TimeSlotsAdapter.ViewHolder> {
     private final List<TimeSlot> timeSlotsSet;
     private final Context context;
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView timeSlotTextValue;
-        public TextView capacityTextValue;
-        public TextView availableTextValue;
-
-        private final View view;
-
-        public ViewHolder(View view) {
-            super(view);
-            // Define click listener for the ViewHolder's View
-            this.view = view;
-
-            findViews();
-        }
-
-        private void findViews() {
-            timeSlotTextValue = view.findViewById(R.id.text_time_slot_value);
-            capacityTextValue = view.findViewById(R.id.text_capacity_value);
-            availableTextValue = view.findViewById(R.id.text_available_value);
-        }
-    }
+    private OnItemClickListener onItemClickListener;
 
     public TimeSlotsAdapter(Context context, List<TimeSlot> timeSlots) {
         this.context = context;
         timeSlotsSet = timeSlots;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     // Create new views (invoked by the layout manager)
@@ -82,6 +64,10 @@ public class TimeSlotsAdapter extends RecyclerView.Adapter<TimeSlotsAdapter.View
             viewHolder.availableTextValue.setTextColor(context.getResources().getColor(R.color.teal_200));
         else
             viewHolder.availableTextValue.setTextColor(context.getResources().getColor(R.color.orange));
+
+        viewHolder.itemView.setOnClickListener(v -> {
+            onItemClickListener.onItemClick(timeSlotsSet.get(position));
+        });
     }
 
     private String formatIsAvailable(boolean isAvailable) {
@@ -98,5 +84,27 @@ public class TimeSlotsAdapter extends RecyclerView.Adapter<TimeSlotsAdapter.View
             return 0;
 
         return timeSlotsSet.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView timeSlotTextValue;
+        public TextView capacityTextValue;
+        public TextView availableTextValue;
+
+        private final View view;
+
+        public ViewHolder(View view) {
+            super(view);
+            // Define click listener for the ViewHolder's View
+            this.view = view;
+
+            findViews();
+        }
+
+        private void findViews() {
+            timeSlotTextValue = view.findViewById(R.id.text_time_slot_value);
+            capacityTextValue = view.findViewById(R.id.text_capacity_value);
+            availableTextValue = view.findViewById(R.id.text_available_value);
+        }
     }
 }

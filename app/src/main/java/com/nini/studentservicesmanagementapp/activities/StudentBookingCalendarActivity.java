@@ -1,5 +1,6 @@
 package com.nini.studentservicesmanagementapp.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,16 +8,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.CalendarView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.nini.studentservicesmanagementapp.R;
 import com.nini.studentservicesmanagementapp.data.api.TimeSlotsApiService;
 import com.nini.studentservicesmanagementapp.data.api.VolleyCallback;
 import com.nini.studentservicesmanagementapp.data.models.TimeSlot;
+import com.nini.studentservicesmanagementapp.fragments.DialogConfirmationFragment;
 import com.nini.studentservicesmanagementapp.shared.TimeSlotsAdapter;
 
 import java.lang.reflect.Array;
@@ -81,6 +86,11 @@ public class StudentBookingCalendarActivity extends AppCompatActivity {
 
     private void setUpRecyclerView() {
         adapter = new TimeSlotsAdapter(this, timeSlotsSet);
+        adapter.setOnItemClickListener(timeSlotData -> {
+            DialogConfirmationFragment dialog = new DialogConfirmationFragment(timeSlotData);
+            dialog.show(getSupportFragmentManager(), "BookingConfirmation");
+        });
+
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(StudentBookingCalendarActivity.this));
     }
