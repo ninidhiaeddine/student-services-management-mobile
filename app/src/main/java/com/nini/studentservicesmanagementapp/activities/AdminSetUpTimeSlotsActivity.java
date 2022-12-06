@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -57,7 +58,6 @@ public class AdminSetUpTimeSlotsActivity extends AppCompatActivity {
     private String dateRange;
     private int slotLengthHours = 0;
     private int slotLengthMinutes = 0;
-    private int serviceType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,11 +179,11 @@ public class AdminSetUpTimeSlotsActivity extends AppCompatActivity {
         getServiceType();
     }
 
-    private void getServiceType() {
+    private int getServiceType() {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
-        serviceType = extras.getInt("serviceType", -1);
+        return extras.getInt("serviceType", -1);
     }
 
     private void initializeButtons() {
@@ -217,6 +217,7 @@ public class AdminSetUpTimeSlotsActivity extends AppCompatActivity {
             // set up new time slot dto:
             newTimeSlotDto.currentCapacity = 0;
             newTimeSlotDto.maximumCapacity = maximumCapacity;
+            newTimeSlotDto.serviceType = getServiceType();
 
             // calculate start and end time of slot:
             Date startTime = addTimeToDate(
@@ -255,15 +256,18 @@ public class AdminSetUpTimeSlotsActivity extends AppCompatActivity {
         Date[] dates = new Date[2];
 
         String[] datesStrings = dateRange.split(" – ");
-        SimpleDateFormat formatter1 = new SimpleDateFormat("MMM dd, yyyy");
-        SimpleDateFormat formatter2 = new SimpleDateFormat("MMM dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+
+        Calendar calendar = Calendar.getInstance();
+        int currentYear = calendar.get(Calendar.YEAR);
 
         for (int i = 0; i < 2; i++) {
             try {
-                dates[i] = formatter1.parse(datesStrings[i]);
+                dates[i] = formatter.parse(datesStrings[i]);
             } catch (ParseException e) {
                 try {
-                    dates[i] = formatter2.parse(datesStrings[i]);
+                    datesStrings[i] = datesStrings[i].concat(", " + currentYear);
+                    dates[i] = formatter.parse(datesStrings[i]);
                 } catch (ParseException ex) {
                     ex.printStackTrace();
                 }
@@ -389,8 +393,11 @@ public class AdminSetUpTimeSlotsActivity extends AppCompatActivity {
             public void onSuccess(String response) {
                 Toast.makeText(
                         AdminSetUpTimeSlotsActivity.this,
-                        "Time Slots added successfully!",
-                        Toast.LENGTH_SHORT).show();
+                        "Time Slots Added Successfully!",
+                        Toast.LENGTH_LONG).show();
+
+                // kill activity
+                finish();
             }
 
             @Override

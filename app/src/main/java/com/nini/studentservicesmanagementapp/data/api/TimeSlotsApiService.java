@@ -11,7 +11,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nini.studentservicesmanagementapp.data.dtos.TimeSlotDto;
 
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,16 +104,22 @@ public class TimeSlotsApiService extends ApiService {
 
     public void getTimeSlots(
             int serviceType,
-            LocalDateTime startDateInclusive,
-            LocalDateTime endDateExclusive,
+            Date startDateInclusive,
+            Date endDateExclusive,
             final VolleyCallback callback) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        Log.i("INFO", startDateInclusive.toString());
+        Log.i("INFO", endDateExclusive.toString());
+        String startDate = formatter.format(startDateInclusive);
+        String endDate = formatter.format(endDateExclusive);
+
         final String ENDPOINT =
                 "/timeslots?serviceType="
                         + serviceType
                         + "&startDateInclusive="
-                        + startDateInclusive
+                        + startDate
                         + "&endDateExclusive="
-                        + endDateExclusive;
+                        + endDate;
         final String URL = API_URL + ENDPOINT;
 
         StringRequest stringRequest = new StringRequest(

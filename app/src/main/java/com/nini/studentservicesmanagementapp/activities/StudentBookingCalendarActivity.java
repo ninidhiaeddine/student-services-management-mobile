@@ -26,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class StudentBookingCalendarActivity extends AppCompatActivity {
@@ -36,8 +37,8 @@ public class StudentBookingCalendarActivity extends AppCompatActivity {
     private TableLayout tableLayout;
 
     // dates:
-    private LocalDateTime selectedDate;
-    private LocalDateTime selectedEndDate;
+    private Date selectedDate;
+    private Date selectedEndDate;
 
     // helpers:
     private ObjectMapper mapper;
@@ -52,10 +53,11 @@ public class StudentBookingCalendarActivity extends AppCompatActivity {
         mapper = new ObjectMapper();
         findViews();
         getServiceType();
+        initializeDates();
         setUpCalendarView();
 
         // api calls:
-        getTimeSlots();
+        getTimeSlotsApi();
     }
 
     private void getServiceType() {
@@ -69,20 +71,32 @@ public class StudentBookingCalendarActivity extends AppCompatActivity {
         tableLayout = findViewById(R.id.table_time_slots);
     }
 
+    private void initializeDates () {
+        Calendar calendar = Calendar.getInstance();
+        selectedDate = calendar.getTime();
+
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        selectedEndDate = calendar.getTime();
+    }
+
     private void setUpCalendarView() {
         Date today = new Date();
         calendarView.setMinDate(today.getTime());
         calendarView.setOnDateChangeListener((view, year, month, day) -> {
             // get dates:
-            selectedDate = LocalDateTime.of(year, month, day, 0, 0);
-            selectedEndDate = LocalDateTime.of(year, month, day, 23, 59);
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, month, day, 0, 0);
+            selectedDate = calendar.getTime();
+
+            calendar.set(year, month, day + 1, 0, 0);
+            selectedEndDate = calendar.getTime();
 
             // make api call:
-            getTimeSlots();
+            getTimeSlotsApi();
         });
     }
 
-    private void getTimeSlots() {
+    private void getTimeSlotsApi() {
         TimeSlotsApiService apiService = new TimeSlotsApiService(this);
         apiService.getTimeSlots(
                 serviceType,
@@ -96,6 +110,11 @@ public class StudentBookingCalendarActivity extends AppCompatActivity {
                             timeSlots = Arrays.asList(mapper.readValue(response, TimeSlot[].class));
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
+                            return;
+                        }
+
+                        if (timeSlots.size() == 0) {
+                            Toast.makeText(StudentBookingCalendarActivity.this, "There are no available time slots for the selected date!", Toast.LENGTH_LONG).show();
                             return;
                         }
 
