@@ -101,7 +101,13 @@ public class StudentBookingDetailsActivity extends AppCompatActivity {
         String StartTimeValue=startTimeString;
         String EndTimeValue=endTimeString;
 
-        String text ="Name: "+FullNameValue+"/n ID: "+ StudentIdValue+"/n Service:  "+ServiceValue+"/n Date:  "+DateValue+ "/n Start Time: "+StartTimeValue+"/n End Time: "+EndTimeValue ;
+        String text = "Name: "
+                + FullNameValue+"\nID: "
+                + StudentIdValue+"\nService:  "
+                + ServiceValue+"\nDate:  "
+                + DateValue+ "\nStart Time: "
+                + StartTimeValue+"\nEnd Time: "
+                +EndTimeValue ;
         MultiFormatWriter writer = new MultiFormatWriter();
         try
         {
