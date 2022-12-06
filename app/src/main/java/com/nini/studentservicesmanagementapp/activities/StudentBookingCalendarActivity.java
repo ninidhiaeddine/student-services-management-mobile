@@ -2,10 +2,13 @@ package com.nini.studentservicesmanagementapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.CalendarView;
 import android.widget.TableLayout;
@@ -21,8 +24,11 @@ import com.nini.studentservicesmanagementapp.data.api.TimeSlotsApiService;
 import com.nini.studentservicesmanagementapp.data.api.VolleyCallback;
 import com.nini.studentservicesmanagementapp.data.models.TimeSlot;
 import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
+import com.nini.studentservicesmanagementapp.shared.TimeSlotsAdapter;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,11 +36,13 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 public class StudentBookingCalendarActivity extends AppCompatActivity {
-    private static final int MAX_ROW_SLOTS = 3;
-
     // views:
     private CalendarView calendarView;
-    private TableLayout tableLayout;
+    private RecyclerView recyclerView;
+    private TimeSlotsAdapter adapter;
+
+    // time slots set:
+    private List<TimeSlot> timeSlotsSet = new ArrayList<>();
 
     // dates:
     private Date selectedDate;
@@ -42,7 +50,6 @@ public class StudentBookingCalendarActivity extends AppCompatActivity {
 
     // helpers:
     private ObjectMapper mapper;
-    private int serviceType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,23 +59,23 @@ public class StudentBookingCalendarActivity extends AppCompatActivity {
         // initialization:
         mapper = new ObjectMapper();
         findViews();
-        getServiceType();
         initializeDates();
         setUpCalendarView();
+        setUpRecyclerView();
 
         // api calls:
         getTimeSlotsApi();
     }
 
-    private void getServiceType() {
+    private int getServiceType() {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        this.serviceType = extras.getInt("serviceType", -1);
+        return extras.getInt("serviceType", -1);
     }
 
     private void findViews() {
         calendarView = findViewById(R.id.calendarView);
-        tableLayout = findViewById(R.id.table_time_slots);
+        recyclerView = findViewById(R.id.recycler_time_slots);
     }
 
     private void initializeDates () {
@@ -77,6 +84,12 @@ public class StudentBookingCalendarActivity extends AppCompatActivity {
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         selectedEndDate = calendar.getTime();
+    }
+
+    private void setUpRecyclerView() {
+        adapter = new TimeSlotsAdapter(timeSlotsSet);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(StudentBookingCalendarActivity.this));
     }
 
     private void setUpCalendarView() {
@@ -99,67 +112,38 @@ public class StudentBookingCalendarActivity extends AppCompatActivity {
     private void getTimeSlotsApi() {
         TimeSlotsApiService apiService = new TimeSlotsApiService(this);
         apiService.getTimeSlots(
-                serviceType,
+                getServiceType(),
                 selectedDate,
                 selectedEndDate,
                 new VolleyCallback() {
                     @Override
                     public void onSuccess(String response) {
-                        List<TimeSlot> timeSlots;
                         try {
-                            timeSlots = Arrays.asList(mapper.readValue(response, TimeSlot[].class));
+                            timeSlotsSet.addAll(Arrays.asList(mapper.readValue(response, TimeSlot[].class)));
+
+                            Log.i("INFO", "Count = " + adapter.getItemCount());
+                            adapter.notifyDataSetChanged();
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
-                            return;
+                            timeSlotsSet.clear();;
+                            adapter.notifyDataSetChanged();
                         }
-
-                        if (timeSlots.size() == 0) {
-                            Toast.makeText(StudentBookingCalendarActivity.this, "There are no available time slots for the selected date!", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-
-                        populateTimeSlots(timeSlots);
                     }
 
                     @Override
                     public void onError(VolleyError error) {
-                        String errMsg = "Failed to retrieve time slots: " + error.toString();
-                        Toast.makeText(StudentBookingCalendarActivity.this, errMsg, Toast.LENGTH_LONG).show();
+                        timeSlotsSet.clear();;
+                        adapter.notifyDataSetChanged();
+
+                        String errorMsg;
+                        if (error.networkResponse.statusCode == 404)
+                            errorMsg = "There are no available time slots for the selected date!";
+                        else
+                            errorMsg = "Failed to retrieve time slots: " + error.toString();
+
+                        Toast.makeText(StudentBookingCalendarActivity.this, errorMsg, Toast.LENGTH_LONG).show();
                     }
                 });
     }
 
-    private void populateTimeSlots(List<TimeSlot> timeSlots) {
-        LayoutInflater inflater = LayoutInflater.from(this);
-        TableRow targetRow = null;
-        for (int i = 0; i < timeSlots.size(); i++) {
-            // create row:
-            if (i % MAX_ROW_SLOTS == 0) {
-                targetRow = new TableRow(this);
-                tableLayout.addView(targetRow);
-            }
-
-            // create slot:
-            ConstraintLayout timeSlotLayout = (ConstraintLayout) inflater.inflate(R.layout.time_slot, null, false);
-            populateTimeSlot(timeSlotLayout, timeSlots.get(i));
-            targetRow.addView(timeSlotLayout);
-        }
-    }
-
-    private void populateTimeSlot(ConstraintLayout timeSlotLayout, TimeSlot timeSlotData) {
-        // get views:
-        TextView timeSlotTextValue = timeSlotLayout.findViewById(R.id.text_time_slot_value);
-        TextView capacityTextValue = timeSlotLayout.findViewById(R.id.text_time_slot_value);
-        TextView availableTextValue = timeSlotLayout.findViewById(R.id.text_time_slot_value);
-
-        // compute values:
-        String timeSlot = timeSlotData.startTime + " - " + timeSlotData.endTime;
-        String capacity = timeSlotData.currentCapacity + " / " + timeSlotData.maximumCapacity;
-        boolean isAvailable = timeSlotData.currentCapacity == timeSlotData.maximumCapacity;
-
-        // set text values:
-        timeSlotTextValue.setText(timeSlot);
-        capacityTextValue.setText(capacity);
-        availableTextValue.setText(String.valueOf(isAvailable));
-    }
 }
