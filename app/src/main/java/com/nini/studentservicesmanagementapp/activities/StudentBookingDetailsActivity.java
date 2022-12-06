@@ -3,9 +3,16 @@ package com.nini.studentservicesmanagementapp.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.nini.studentservicesmanagementapp.R;
 import com.nini.studentservicesmanagementapp.data.models.Student;
 import com.nini.studentservicesmanagementapp.shared.UserSharedPrefsKeys;
@@ -23,6 +30,8 @@ public class StudentBookingDetailsActivity extends AppCompatActivity {
     private TextView textStartTimeValue;
     private TextView textEndTimeValue;
 
+    ImageView image_qr_code;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +40,9 @@ public class StudentBookingDetailsActivity extends AppCompatActivity {
         findViews();
         getBundleValues();
         populateUi();
-        generateQrCode();
+
+        image_qr_code = findViewById(R.id.image_qr_code);
+        generateQR();
     }
 
     private void findViews() {
@@ -80,7 +91,28 @@ public class StudentBookingDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void generateQrCode() {
+    private void generateQR()
+    {
+        Student authenticatedStudent = UserSharedPrefsKeys.getAuthenticatedStudent(this);
+        String FullNameValue=authenticatedStudent.getFullName();
+        String StudentIdValue=String.valueOf(authenticatedStudent.studentId);
+        String ServiceValue=determineServiceName(serviceType);
+        String DateValue=dateString;
+        String StartTimeValue=startTimeString;
+        String EndTimeValue=endTimeString;
 
+        String text ="Name: "+FullNameValue+"/n ID: "+ StudentIdValue+"/n Service:  "+ServiceValue+"/n Date:  "+DateValue+ "/n Start Time: "+StartTimeValue+"/n End Time: "+EndTimeValue ;
+        MultiFormatWriter writer = new MultiFormatWriter();
+        try
+        {
+            BitMatrix matrix = writer.encode(text, BarcodeFormat.QR_CODE,600,600);
+            BarcodeEncoder encoder = new BarcodeEncoder();
+            Bitmap bitmap = encoder.createBitmap(matrix);
+            image_qr_code.setImageBitmap(bitmap);
+
+        } catch (WriterException e)
+        {
+            e.printStackTrace();
+        }
     }
 }
