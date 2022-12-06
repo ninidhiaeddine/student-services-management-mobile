@@ -1,19 +1,13 @@
 package com.nini.studentservicesmanagementapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.widget.CalendarView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -23,7 +17,6 @@ import com.nini.studentservicesmanagementapp.R;
 import com.nini.studentservicesmanagementapp.data.api.TimeSlotsApiService;
 import com.nini.studentservicesmanagementapp.data.api.VolleyCallback;
 import com.nini.studentservicesmanagementapp.data.models.TimeSlot;
-import com.nini.studentservicesmanagementapp.shared.SharedPrefsKeys;
 import com.nini.studentservicesmanagementapp.shared.TimeSlotsAdapter;
 
 import java.lang.reflect.Array;
@@ -125,21 +118,21 @@ public class StudentBookingCalendarActivity extends AppCompatActivity {
                             adapter.notifyDataSetChanged();
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
-                            timeSlotsSet.clear();;
+                            timeSlotsSet.clear();
                             adapter.notifyDataSetChanged();
                         }
                     }
 
                     @Override
                     public void onError(VolleyError error) {
-                        timeSlotsSet.clear();;
+                        timeSlotsSet.clear();
                         adapter.notifyDataSetChanged();
 
                         String errorMsg;
                         if (error.networkResponse.statusCode == 404)
                             errorMsg = "There are no available time slots for the selected date!";
                         else
-                            errorMsg = "Failed to retrieve time slots: " + error.toString();
+                            errorMsg = "Failed to retrieve time slots: " + error;
 
                         Toast.makeText(StudentBookingCalendarActivity.this, errorMsg, Toast.LENGTH_LONG).show();
                     }

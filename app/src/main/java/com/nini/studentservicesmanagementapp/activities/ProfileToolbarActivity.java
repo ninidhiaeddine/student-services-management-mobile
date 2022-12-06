@@ -148,7 +148,7 @@ public class ProfileToolbarActivity extends AppCompatActivity {
                         .commit();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "Failed to retrieve Fragment Layout View: " + e.toString(),
+            Toast.makeText(this, "Failed to retrieve Fragment Layout View: " + e,
                     Toast.LENGTH_SHORT).show();
         }
     }

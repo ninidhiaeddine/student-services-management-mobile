@@ -18,7 +18,7 @@ import java.util.List;
 
 public class TimeSlotsAdapter extends RecyclerView.Adapter<TimeSlotsAdapter.ViewHolder> {
     private final List<TimeSlot> timeSlotsSet;
-    private Context context;
+    private final Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView timeSlotTextValue;
